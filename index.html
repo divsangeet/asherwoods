@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌲</text></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary SEO Meta Tags -->
+    <title>Asherwoods Cafe & Cottages | Luxury Mountain Resort, Kasol</title>
+    <meta name="title" content="Asherwoods Cafe & Cottages | Luxury Mountain Resort, Kasol" />
+    <meta name="description" content="Experience high-end hospitality in Kasol, Himachal Pradesh. Asherwoods Cafe & Cottages offers riverside luxury cabins, stunning mountain views, private balconies, bonfire nights, and authentic gourmet dining." />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://asherwoodskasol.com/" />
+    <meta property="og:title" content="Asherwoods Cafe & Cottages | Luxury Mountain Resort, Kasol" />
+    <meta property="og:description" content="Escape to nature. Stay in luxury wooden cottages beside the Parvati River. Enjoy gourmet cafe menus and cinematic mountain views." />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1542401886-65d6c61db217?auto=format&fit=crop&w=1200&h=630&q=80" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="Asherwoods Cafe & Cottages | Luxury Mountain Resort, Kasol" />
+    <meta property="twitter:description" content="Escape to nature. Stay in luxury wooden cottages beside the Parvati River. Enjoy gourmet cafe menus and cinematic mountain views." />
+    <meta property="twitter:image" content="https://images.unsplash.com/photo-1542401886-65d6c61db217?auto=format&fit=crop&w=1200&h=630&q=80" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+
+    <!-- Schema Markup JSON-LD -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Hotel",
+        "name": "Asherwoods Cafe & Cottages",
+        "description": "Premium luxury mountain resort, cafe and cottages located near Parvati River in Kasol, Himachal Pradesh.",
+        "image": "https://images.unsplash.com/photo-1542401886-65d6c61db217?auto=format&fit=crop&w=800&q=80",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Kasol",
+          "addressRegion": "Himachal Pradesh",
+          "addressCountry": "India"
+        },
+        "priceRange": "$$$",
+        "telephone": "+919876543210",
+        "starRating": {
+          "@type": "Rating",
+          "ratingValue": "4.9",
+          "bestRating": "5"
+        },
+        "amenityFeature": [
+          {
+            "@type": "LocationFeatureSpecification",
+            "name": "Riverside View",
+            "value": true
+          },
+          {
+            "@type": "LocationFeatureSpecification",
+            "name": "Private Balconies",
+            "value": true
+          },
+          {
+            "@type": "LocationFeatureSpecification",
+            "name": "Gourmet Cafe",
+            "value": true
+          },
+          {
+            "@type": "LocationFeatureSpecification",
+            "name": "Free Wi-Fi",
+            "value": true
+          }
+        ]
+      }
+    </script>
+
+    <!-- React and ReactDOM UMD CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    
+    <!-- Babel Standalone CDN -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Tailwind Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              forest: {
+                950: '#061c11',
+                900: '#0A2F1D',
+                800: '#14462B',
+                700: '#1E5C39',
+                600: '#2A7249',
+                500: '#398D5B',
+                100: '#E8F5EE',
+              },
+              moss: {
+                DEFAULT: '#1E4620',
+                light: '#2E5A30',
+              },
+              sage: {
+                DEFAULT: '#4A5D4E',
+                light: '#728876',
+              },
+              wood: {
+                900: '#2E1E12',
+                800: '#4A3B32',
+                700: '#634F42',
+                600: '#7E6656',
+                500: '#8C6239',
+                400: '#AC8259',
+                300: '#C5A37D',
+                200: '#DFCDA2',
+              },
+              luxury: {
+                gold: '#D4AF37',
+                beige: '#F7F4EB',
+                warmwhite: '#FAF8F5',
+              }
+            },
+            fontFamily: {
+              serif: ['"Playfair Display"', 'Georgia', 'serif'],
+              sans: ['Inter', 'Outfit', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
+
+    <!-- Lucide Vanilla Icon CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom Preloader and Scrollbar Styles -->
+    <style>
+      #initial-loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #0A2F1D; /* forest-900 */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 99999;
+        transition: opacity 0.8s ease, visibility 0.8s ease;
+      }
+      .loader-logo {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5rem;
+        color: #D4AF37; /* Gold */
+        margin-bottom: 2rem;
+        letter-spacing: 0.15em;
+        opacity: 0;
+        animation: fadeIn 1.5s forwards ease-in-out;
+      }
+      .loader-bar-bg {
+        width: 200px;
+        height: 2px;
+        background-color: rgba(212, 175, 55, 0.2);
+        position: relative;
+        overflow: hidden;
+      }
+      .loader-bar {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: #D4AF37;
+        left: -100%;
+        animation: loading 2.5s forwards cubic-bezier(0.1, 0.85, 0.25, 1);
+      }
+      @keyframes fadeIn {
+        to { opacity: 1; transform: translateY(0); }
+        from { opacity: 0; transform: translateY(10px); }
+      }
+      @keyframes loading {
+        to { left: 0; }
+      }
+
+      /* Custom premium scrollbar styling */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #FAF8F5;
+      }
+      .dark ::-webkit-scrollbar-track {
+        background: #061c11;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #C5A37D;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #8C6239;
+      }
+      
+      /* Hide horizontal scrollbar in weather/suggested FAQ */
+      .scrollbar-none::-webkit-scrollbar {
+        display: none;
+      }
+    </style>
+  </head>
+  <body class="bg-luxury-warmwhite text-slate-800 transition-colors duration-300 dark:bg-forest-950 dark:text-white">
+    <!-- Luxury Preloader -->
+    <div id="initial-loader">
+      <div class="loader-logo">ASHERWOODS</div>
+      <div class="loader-bar-bg">
+        <div class="loader-bar" id="loader-progress"></div>
+      </div>
+    </div>
+
+    <div id="root"></div>
+
+    <!-- Script assets (in UMD/Babel compilation order) -->
+    <script src="src/db.js"></script>
+    <script type="text/babel" src="src/components.jsx"></script>
+    <script type="text/babel" src="src/admin.jsx"></script>
+    <script type="text/babel" src="src/App.jsx"></script>
+
+    <!-- Hide preloader code -->
+    <script>
+      window.addEventListener('load', () => {
+        const loader = document.getElementById('initial-loader');
+        if (loader) {
+          setTimeout(() => {
+            loader.style.opacity = '0';
+            loader.style.visibility = 'hidden';
+          }, 800);
+        }
+      });
+    </script>
+  </body>
+</html>
