@@ -1,4 +1,7 @@
 /* Asherwoods Cafe & Cottages - Custom CSS Styles & Animations */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @keyframes fade-in {
   from {

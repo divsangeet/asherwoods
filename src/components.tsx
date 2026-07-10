@@ -1,32 +1,29 @@
-// Asherwoods Cafe & Cottages - React UI Components (Babel Compilable)
+// Asherwoods Cafe & Cottages - Typed UI Components
+import React from 'react';
+import { 
+  Waves, Mountain, Coffee, Flame, Utensils, Wifi, Shield, Trees, 
+  Star, Heart, X, CheckCircle, Check, ChefHat, Navigation, 
+  ChevronRight, CalendarDays, Users, DoorOpen, Sparkles, 
+  MessageSquare, Send, Instagram, Facebook, Twitter, 
+  MessageCircle, PhoneCall, Phone, Mail, MapPin, ExternalLink, 
+  History, Menu, Sun, Moon 
+} from 'lucide-react';
+import { Room, CafeItem, Review, Coupon, Booking, SearchParams, GuestSession } from './types';
+import { dbService } from './db';
 
-// 1. Icon Wrapper Component for Vanilla Lucide
-const Icon = ({ name, className = "", size = 20 }) => {
-  const ref = React.useRef(null);
-  React.useEffect(() => {
-    if (ref.current && window.lucide) {
-      ref.current.innerHTML = "";
-      const iconEl = document.createElement("i");
-      iconEl.setAttribute("data-lucide", name);
-      if (className) iconEl.className = className;
-      iconEl.style.width = `${size}px`;
-      iconEl.style.height = `${size}px`;
-      ref.current.appendChild(iconEl);
-      window.lucide.createIcons({
-        attrs: {
-          class: className,
-          width: size,
-          height: size
-        },
-        nameAttr: "data-lucide"
-      });
-    }
-  }, [name, className, size]);
-  return <span ref={ref} className="inline-flex items-center justify-center"></span>;
-};
+// 1. Sticky Glassmorphic Navbar Component
+interface NavbarProps {
+  onViewChange: (view: string) => void;
+  currentView: string;
+  openGuestPortal: () => void;
+  isDarkMode: boolean;
+  toggleDarkMode: () => void;
+  activeGuest: GuestSession | null;
+}
 
-// 2. Sticky Glassmorphic Navbar
-const Navbar = ({ onViewChange, currentView, openGuestPortal, isDarkMode, toggleDarkMode, activeGuest }) => {
+export const Navbar: React.FC<NavbarProps> = ({ 
+  onViewChange, currentView, openGuestPortal, isDarkMode, toggleDarkMode, activeGuest 
+}) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
 
@@ -81,27 +78,24 @@ const Navbar = ({ onViewChange, currentView, openGuestPortal, isDarkMode, toggle
 
           {/* Actions */}
           <div className="hidden md:flex items-center space-x-6">
-            {/* Dark Mode Toggle */}
             <button 
               onClick={toggleDarkMode} 
               className="text-luxury-warmwhite hover:text-luxury-gold transition duration-300"
               title="Toggle Dark/Light Mode"
             >
-              <Icon name={isDarkMode ? "sun" : "moon"} size={20} />
+              {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
             </button>
 
-            {/* Guest Portal */}
             <button 
               onClick={openGuestPortal}
               className="text-luxury-warmwhite hover:text-luxury-gold transition duration-300 flex items-center space-x-2"
             >
-              <Icon name="user" size={20} />
+              <Users size={20} />
               <span className="text-xs uppercase tracking-wider font-semibold">
                 {activeGuest ? activeGuest.name.split(" ")[0] : "Login"}
               </span>
             </button>
 
-            {/* Admin Dashboard Entry */}
             <button
               onClick={() => onViewChange("admin")}
               className={`text-xs uppercase tracking-wider hover:text-luxury-gold transition duration-300 ${
@@ -111,7 +105,6 @@ const Navbar = ({ onViewChange, currentView, openGuestPortal, isDarkMode, toggle
               Portal
             </button>
 
-            {/* CTA Button */}
             <button 
               onClick={() => onViewChange("rooms")}
               className="bg-luxury-gold hover:bg-yellow-600 text-forest-950 px-5 py-2.5 text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-md transform hover:-translate-y-0.5 rounded-sm"
@@ -123,22 +116,21 @@ const Navbar = ({ onViewChange, currentView, openGuestPortal, isDarkMode, toggle
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center space-x-4">
             <button onClick={toggleDarkMode} className="text-luxury-warmwhite">
-              <Icon name={isDarkMode ? "sun" : "moon"} size={20} />
+              {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
             </button>
             <button onClick={openGuestPortal} className="text-luxury-warmwhite">
-              <Icon name="user" size={20} />
+              <Users size={20} />
             </button>
             <button 
               onClick={() => setIsOpen(!isOpen)} 
               className="text-luxury-warmwhite hover:text-luxury-gold transition duration-300"
             >
-              <Icon name={isOpen ? "x" : "menu"} size={24} />
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
       {isOpen && (
         <div className="md:hidden bg-forest-950/95 backdrop-blur-lg border-t border-forest-800/30 transition-all duration-300">
           <div className="px-4 pt-4 pb-6 space-y-3">
@@ -183,8 +175,13 @@ const Navbar = ({ onViewChange, currentView, openGuestPortal, isDarkMode, toggle
   );
 };
 
-// 3. Hero Slideshow with Floating Widget
-const Hero = ({ onSearch, onViewChange }) => {
+// 2. Hero Component
+interface HeroProps {
+  onSearch: (params: SearchParams) => void;
+  onViewChange: (view: string) => void;
+}
+
+export const Hero: React.FC<HeroProps> = ({ onSearch, onViewChange }) => {
   const slides = [
     {
       img: "https://images.unsplash.com/photo-1542401886-65d6c61db217?auto=format&fit=crop&w=1200&q=80",
@@ -210,11 +207,10 @@ const Hero = ({ onSearch, onViewChange }) => {
       setActiveSlide((prev) => (prev + 1) % slides.length);
     }, 6000);
     return () => clearInterval(timer);
-  }, []);
+  }, [slides.length]);
 
   return (
     <div className="relative h-screen w-full overflow-hidden bg-forest-950">
-      {/* Background Slideshow with Zoom effect */}
       {slides.map((slide, idx) => (
         <div
           key={idx}
@@ -232,18 +228,14 @@ const Hero = ({ onSearch, onViewChange }) => {
         </div>
       ))}
 
-      {/* Forest Green Gradient Layer */}
       <div className="absolute inset-0 bg-gradient-to-t from-forest-900 via-transparent to-forest-950/60 pointer-events-none"></div>
 
-      {/* Floating Booking Widget */}
       <div className="relative z-10 h-full flex flex-col justify-center items-center px-4 max-w-7xl mx-auto text-center">
-        {/* Animated Badge */}
         <div className="mb-4 inline-flex items-center space-x-2 bg-luxury-gold/10 border border-luxury-gold/30 px-3 py-1 text-xs tracking-widest text-luxury-gold uppercase rounded-full animate-pulse">
-          <Icon name="sparkles" size={12} className="text-luxury-gold" />
-          <span>Premier Himalayan Sanctuary</span>
+          <Sparkles size={12} className="text-luxury-gold" />
+          <span>General Himalayan Sanctuary</span>
         </div>
 
-        {/* Dynamic Titles */}
         <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl text-luxury-warmwhite font-bold leading-tight drop-shadow-md">
           {slides[activeSlide].title}
         </h1>
@@ -254,7 +246,6 @@ const Hero = ({ onSearch, onViewChange }) => {
           Asherwoods Cafe & Cottages
         </h2>
 
-        {/* Buttons */}
         <div className="mt-8 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 justify-center">
           <button 
             onClick={() => onViewChange("rooms")}
@@ -273,7 +264,6 @@ const Hero = ({ onSearch, onViewChange }) => {
           </button>
         </div>
 
-        {/* Floating Booking Widget */}
         <div className="absolute bottom-10 md:bottom-16 w-full max-w-5xl px-4 left-1/2 transform -translate-x-1/2">
           <BookingWidget onSearch={onSearch} />
         </div>
@@ -282,14 +272,18 @@ const Hero = ({ onSearch, onViewChange }) => {
   );
 };
 
-// 4. Floating Booking Widget
-const BookingWidget = ({ onSearch }) => {
+// 3. Booking Search Widget
+interface BookingWidgetProps {
+  onSearch: (params: SearchParams) => void;
+}
+
+export const BookingWidget: React.FC<BookingWidgetProps> = ({ onSearch }) => {
   const [checkIn, setCheckIn] = React.useState("");
   const [checkOut, setCheckOut] = React.useState("");
   const [guests, setGuests] = React.useState(2);
   const [roomType, setRoomType] = React.useState("all");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!checkIn || !checkOut) {
       alert("Please select check-in and check-out dates");
@@ -304,10 +298,9 @@ const BookingWidget = ({ onSearch }) => {
       className="bg-forest-900/60 dark:bg-forest-950/70 border border-forest-800/30 backdrop-blur-md p-4 md:p-6 shadow-2xl flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4 rounded-sm text-left"
     >
       <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-4">
-        {/* Check In */}
         <div className="flex flex-col">
           <label className="text-[10px] uppercase tracking-widest text-luxury-gold font-bold mb-1 flex items-center space-x-1">
-            <Icon name="calendar-days" size={10} className="text-luxury-gold" />
+            <CalendarDays size={10} className="text-luxury-gold" />
             <span>Check In</span>
           </label>
           <input
@@ -320,10 +313,9 @@ const BookingWidget = ({ onSearch }) => {
           />
         </div>
 
-        {/* Check Out */}
         <div className="flex flex-col">
           <label className="text-[10px] uppercase tracking-widest text-luxury-gold font-bold mb-1 flex items-center space-x-1">
-            <Icon name="calendar-days" size={10} className="text-luxury-gold" />
+            <CalendarDays size={10} className="text-luxury-gold" />
             <span>Check Out</span>
           </label>
           <input
@@ -336,10 +328,9 @@ const BookingWidget = ({ onSearch }) => {
           />
         </div>
 
-        {/* Guests */}
         <div className="flex flex-col">
           <label className="text-[10px] uppercase tracking-widest text-luxury-gold font-bold mb-1 flex items-center space-x-1">
-            <Icon name="users" size={10} className="text-luxury-gold" />
+            <Users size={10} className="text-luxury-gold" />
             <span>Guests</span>
           </label>
           <select
@@ -355,10 +346,9 @@ const BookingWidget = ({ onSearch }) => {
           </select>
         </div>
 
-        {/* Room Type */}
         <div className="flex flex-col">
           <label className="text-[10px] uppercase tracking-widest text-luxury-gold font-bold mb-1 flex items-center space-x-1">
-            <Icon name="door-open" size={10} className="text-luxury-gold" />
+            <DoorOpen size={10} className="text-luxury-gold" />
             <span>Cottage Type</span>
           </label>
           <select
@@ -387,17 +377,17 @@ const BookingWidget = ({ onSearch }) => {
   );
 };
 
-// 5. Why Choose Us Section
-const WhyChooseUs = () => {
+// 4. Why Choose Us Section
+export const WhyChooseUs: React.FC = () => {
   const perks = [
-    { title: "River Side Property", desc: "Listen to the murmurs of the Parvati River flows directly bordering our private grass lawn decks.", icon: "waves" },
-    { title: "Mountain Views", desc: "Wake up to unobstructed, cinematic views of snow-dusted Himalayan peaks and pine forests.", icon: "mountain" },
-    { title: "Private Balconies", desc: "Every cabin includes a private cedarwood balcony perfect for sipping honey cappuccino.", icon: "coffee" },
-    { title: "Bonfire Nights", desc: "Relax by our cozy central bonfire pit with Israel dining and local music every evening.", icon: "flame" },
-    { title: "Gourmet Cafe", desc: "Enjoy an expansive multi-cuisine menu featuring Himachali and Israeli artisan delicacies.", icon: "utensils" },
-    { title: "High-Speed WiFi", desc: "Stay connected in the deep woods with fiber high-speed wireless networks for digital nomads.", icon: "wifi" },
-    { title: "Secured Parking", desc: "Hassle-free onsite secured parking space for private vehicles and motorcycles.", icon: "shield" },
-    { title: "Peaceful Environment", desc: "A sanctuary set away from the commercial crowds, deep in nature walks.", icon: "trees" }
+    { title: "River Side Property", desc: "Listen to the murmurs of the Parvati River flowing directly bordering our private grass lawn decks.", icon: <Waves size={24} /> },
+    { title: "Mountain Views", desc: "Wake up to unobstructed, scenic views of snow-dusted Himalayan peaks and pine forests.", icon: <Mountain size={24} /> },
+    { title: "Private Balconies", desc: "Every cabin includes a private cedarwood balcony perfect for sipping honey cappuccino.", icon: <Coffee size={24} /> },
+    { title: "Bonfire Nights", desc: "Relax by our cozy central bonfire pit with Israel dining and local music every evening.", icon: <Flame size={24} /> },
+    { title: "Gourmet Cafe", desc: "Enjoy an expansive multi-cuisine menu featuring Himachali and Israeli artisan delicacies.", icon: <Utensils size={24} /> },
+    { title: "High-Speed WiFi", desc: "Stay connected in the deep woods with fiber high-speed wireless networks for digital nomads.", icon: <Wifi size={24} /> },
+    { title: "Secured Parking", desc: "Hassle-free onsite secured parking space for private vehicles and motorcycles.", icon: <Shield size={24} /> },
+    { title: "Peaceful Environment", desc: "A sanctuary set away from the commercial crowds, deep in nature walks.", icon: <Trees size={24} /> }
   ];
 
   return (
@@ -418,7 +408,7 @@ const WhyChooseUs = () => {
               className="bg-white/40 dark:bg-forest-900/40 p-8 border border-forest-800/10 dark:border-white/5 backdrop-blur-md rounded-sm group hover:border-luxury-gold/50 hover:shadow-xl transition-all duration-500"
             >
               <div className="h-12 w-12 rounded-sm bg-forest-900/10 dark:bg-luxury-gold/10 flex items-center justify-center text-forest-900 dark:text-luxury-gold group-hover:bg-luxury-gold group-hover:text-forest-950 transition-colors duration-500">
-                <Icon name={p.icon} size={24} />
+                {p.icon}
               </div>
               <h3 className="font-serif text-lg text-forest-900 dark:text-luxury-warmwhite font-bold mt-6 group-hover:text-luxury-gold transition-colors duration-300">
                 {p.title}
@@ -434,13 +424,20 @@ const WhyChooseUs = () => {
   );
 };
 
-// 6. Rooms Section
-const Rooms = ({ onBookRoom, wishlist = [], toggleWishlist, searchParams }) => {
-  const [rooms, setRooms] = React.useState([]);
-  const [selectedCottage, setSelectedCottage] = React.useState(null);
+// 5. Rooms Section
+interface RoomsProps {
+  onBookRoom: (room: Room) => void;
+  wishlist: string[];
+  toggleWishlist: (id: string) => void;
+  searchParams: SearchParams | null;
+}
+
+export const Rooms: React.FC<RoomsProps> = ({ onBookRoom, wishlist = [], toggleWishlist, searchParams }) => {
+  const [rooms, setRooms] = React.useState<Room[]>([]);
+  const [selectedCottage, setSelectedCottage] = React.useState<Room | null>(null);
 
   React.useEffect(() => {
-    setRooms(window.dbService.getRooms());
+    setRooms(dbService.getRooms());
   }, [searchParams]);
 
   const filteredRooms = React.useMemo(() => {
@@ -456,7 +453,7 @@ const Rooms = ({ onBookRoom, wishlist = [], toggleWishlist, searchParams }) => {
           <h2 className="font-serif text-4xl md:text-5xl text-forest-900 dark:text-luxury-warmwhite font-bold mt-2">
             Our Luxurious Wooden Cottages
           </h2>
-          <p className="font-sans text-sm text-slate-600 dark:text-luxury-beige/70 mt-4 max-w-2xl mx-auto">
+          <p className="font-sans text-sm text-slate-650 dark:text-luxury-beige/70 mt-4 max-w-2xl mx-auto">
             Each cedarwood cabin is custom-crafted to blend organic architecture with premium comfort. Wake up to the rapids of the river or the peaks of Kasol.
           </p>
           <div className="h-0.5 w-20 bg-luxury-gold mx-auto mt-4"></div>
@@ -479,7 +476,7 @@ const Rooms = ({ onBookRoom, wishlist = [], toggleWishlist, searchParams }) => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent"></div>
 
                   <div className="absolute top-4 left-4 bg-forest-900/80 backdrop-blur-xs text-luxury-gold text-xs font-bold py-1 px-2.5 rounded-sm flex items-center space-x-1 border border-luxury-gold/30">
-                    <Icon name="star" size={10} className="fill-luxury-gold text-luxury-gold" />
+                    <Star size={10} className="fill-luxury-gold text-luxury-gold" />
                     <span>{room.rating}</span>
                   </div>
 
@@ -487,8 +484,7 @@ const Rooms = ({ onBookRoom, wishlist = [], toggleWishlist, searchParams }) => {
                     onClick={() => toggleWishlist(room.id)}
                     className="absolute top-4 right-4 h-9 w-9 rounded-full bg-white/10 backdrop-blur-xs border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-red-500 transition-all duration-300 animate-fade-in"
                   >
-                    <Icon 
-                      name="heart" 
+                    <Heart 
                       size={16} 
                       className={isWishlisted ? "fill-red-500 text-red-500" : "text-white"} 
                     />
@@ -508,7 +504,7 @@ const Rooms = ({ onBookRoom, wishlist = [], toggleWishlist, searchParams }) => {
                   <div className="grid grid-cols-3 gap-2 py-6 border-t border-b border-forest-800/10 dark:border-white/5 my-6">
                     {room.amenities.slice(0, 3).map((am, i) => (
                       <div key={i} className="flex items-center space-x-1.5 text-xs text-slate-700 dark:text-luxury-beige/90">
-                        <Icon name="check-circle" size={12} className="text-luxury-gold" />
+                        <CheckCircle size={12} className="text-luxury-gold" />
                         <span className="truncate">{am}</span>
                       </div>
                     ))}
@@ -518,7 +514,7 @@ const Rooms = ({ onBookRoom, wishlist = [], toggleWishlist, searchParams }) => {
                     <div>
                       <p className="text-[10px] text-slate-500 dark:text-luxury-beige/60 uppercase tracking-widest">Starting Nightly</p>
                       <p className="font-serif text-2xl text-forest-900 dark:text-luxury-gold font-bold">
-                        ₹{room.price} <span className="text-xs text-slate-500 font-sans font-normal"> + taxes</span>
+                        ₹{room.price} <span className="text-xs text-slate-505 font-sans font-normal"> + taxes</span>
                       </p>
                     </div>
 
@@ -551,7 +547,7 @@ const Rooms = ({ onBookRoom, wishlist = [], toggleWishlist, searchParams }) => {
               onClick={() => setSelectedCottage(null)}
               className="absolute top-4 right-4 h-10 w-10 bg-forest-900/10 dark:bg-white/10 hover:bg-luxury-gold text-slate-800 dark:text-white rounded-full flex items-center justify-center transition duration-300 z-10"
             >
-              <Icon name="x" size={20} />
+              <X size={20} />
             </button>
 
             <div className="grid grid-cols-1 md:grid-cols-2">
@@ -569,16 +565,16 @@ const Rooms = ({ onBookRoom, wishlist = [], toggleWishlist, searchParams }) => {
               </div>
 
               <div className="p-8 md:p-10">
-                <h4 className="font-serif text-lg text-forest-900 dark:text-luxury-gold font-bold font-semibold">Cottage Overview</h4>
+                <h4 className="font-serif text-lg text-forest-900 dark:text-luxury-gold font-semibold">Cottage Overview</h4>
                 <p className="font-sans text-sm text-slate-600 dark:text-luxury-beige/70 mt-3 leading-relaxed">
                   {selectedCottage.description}
                 </p>
 
-                <h4 className="font-serif text-lg text-forest-900 dark:text-luxury-gold font-bold mt-8 font-semibold">Premium Amenities Included</h4>
+                <h4 className="font-serif text-lg text-forest-900 dark:text-luxury-gold mt-8 font-semibold">Premium Amenities Included</h4>
                 <div className="grid grid-cols-2 gap-3 mt-4">
                   {selectedCottage.amenities.map((am, i) => (
                     <div key={i} className="flex items-center space-x-2 text-sm text-slate-700 dark:text-luxury-beige/90">
-                      <Icon name="check" size={14} className="text-luxury-gold" />
+                      <Check size={14} className="text-luxury-gold" />
                       <span>{am}</span>
                     </div>
                   ))}
@@ -586,7 +582,7 @@ const Rooms = ({ onBookRoom, wishlist = [], toggleWishlist, searchParams }) => {
 
                 <div className="border-t border-forest-800/10 dark:border-white/5 pt-8 mt-8 flex justify-between items-center">
                   <div>
-                    <p className="text-[10px] text-slate-500 uppercase tracking-widest">Rate Per Night</p>
+                    <p className="text-[10px] text-slate-550 uppercase tracking-widest">Rate Per Night</p>
                     <p className="font-serif text-3xl text-forest-900 dark:text-luxury-gold font-bold">₹{selectedCottage.price}</p>
                   </div>
 
@@ -609,14 +605,14 @@ const Rooms = ({ onBookRoom, wishlist = [], toggleWishlist, searchParams }) => {
   );
 };
 
-// 7. Cafe Menu Section
-const CafeMenu = () => {
+// 6. Cafe Menu Section
+export const CafeMenu: React.FC = () => {
   const categories = ["All", "Coffee", "Israeli Food", "Breakfast", "Pizza", "Pasta", "Burgers", "Desserts", "Himachali Specials"];
   const [activeCategory, setActiveCategory] = React.useState("All");
-  const [menuItems, setMenuItems] = React.useState([]);
+  const [menuItems, setMenuItems] = React.useState<CafeItem[]>([]);
 
   React.useEffect(() => {
-    setMenuItems(window.dbService.getCafeItems());
+    setMenuItems(dbService.getCafeItems());
   }, []);
 
   const filteredItems = React.useMemo(() => {
@@ -680,7 +676,7 @@ const CafeMenu = () => {
                   <h3 className="font-serif text-lg font-bold text-luxury-warmwhite group-hover:text-luxury-gold transition-colors duration-300">
                     {item.name}
                   </h3>
-                  <span className="font-serif text-lg text-luxury-gold font-bold ml-4 font-semibold">
+                  <span className="font-serif text-lg text-luxury-gold font-bold ml-4">
                     ₹{item.price}
                   </span>
                 </div>
@@ -689,7 +685,7 @@ const CafeMenu = () => {
                 </p>
                 <div className="border-t border-white/5 pt-4 mt-6 flex items-center justify-between">
                   <span className="text-[10px] text-luxury-gold uppercase tracking-widest font-semibold flex items-center space-x-1">
-                    <Icon name="chef-hat" size={10} className="text-luxury-gold" />
+                    <ChefHat size={10} className="text-luxury-gold" />
                     <span>Gourmet Standard</span>
                   </span>
                   <button className="bg-luxury-gold/10 hover:bg-luxury-gold hover:text-forest-950 text-luxury-gold px-3.5 py-1.5 text-[10px] uppercase font-bold tracking-wider border border-luxury-gold/30 rounded-sm transition duration-300">
@@ -705,8 +701,8 @@ const CafeMenu = () => {
   );
 };
 
-// 8. Experiences Section
-const Experiences = () => {
+// 7. Experiences Section
+export const Experiences: React.FC = () => {
   const exps = [
     { title: "Riverside Bonfire Nights", desc: "Share music, tales and Israeli cuisine around our glowing log pit right beside the Parvati river.", image: "https://images.unsplash.com/photo-1526495124232-a02e18494d17?auto=format&fit=crop&w=600&q=80" },
     { title: "Guided Alpine Treks", desc: "Hike the legendary pine paths up to Chalal, Kheerganga, or Tosh guided by local mountaineers.", image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80" },
@@ -752,8 +748,8 @@ const Experiences = () => {
   );
 };
 
-// 9. Pinterest Masonry Gallery
-const Gallery = () => {
+// 8. Pinterest Masonry Gallery
+export const Gallery: React.FC = () => {
   const images = [
     { src: "https://images.unsplash.com/photo-1542401886-65d6c61db217?auto=format&fit=crop&w=600&q=80", cat: "Cottages" },
     { src: "https://images.unsplash.com/photo-1587061949409-02df41d5e562?auto=format&fit=crop&w=600&q=80", cat: "Cottages" },
@@ -772,7 +768,7 @@ const Gallery = () => {
   const filteredImages = React.useMemo(() => {
     if (activeCat === "All") return images;
     return images.filter(img => img.cat === activeCat);
-  }, [activeCat]);
+  }, [activeCat, images]);
 
   return (
     <section className="py-24 bg-luxury-warmwhite dark:bg-forest-900/40 transition-colors duration-300">
@@ -825,8 +821,8 @@ const Gallery = () => {
   );
 };
 
-// 10. Attractions & Interactive SVG Map
-const Attractions = () => {
+// 9. Attractions & Interactive SVG Map
+export const Attractions: React.FC = () => {
   const points = [
     { id: "kasol", name: "Kasol Market", dist: "1.2 km", desc: "The bustling core of Parvati Valley, packed with Israeli diners, local handicraft stalls, and Himalayan organic bakeries.", color: "#D4AF37", cx: 120, cy: 150 },
     { id: "chalal", name: "Chalal Village", dist: "2.0 km", desc: "Walk down an evergreen pine path bordering the gushing rapids. Renowned for its calm traditional ambiance.", color: "#8C6239", cx: 180, cy: 190 },
@@ -884,7 +880,7 @@ const Attractions = () => {
                       <circle 
                         cx={p.cx} 
                         cy={p.cy} 
-                        r={isActive ? "10" : "7"} 
+                        r={isActive ? 10 : 7} 
                         fill={isActive ? "#D4AF37" : "rgba(255,255,255,0.2)"}
                         stroke={p.color}
                         strokeWidth="2.5"
@@ -920,14 +916,14 @@ const Attractions = () => {
                   {activePoint.dist}
                 </span>
               </div>
-              <p className="font-sans text-sm text-slate-600 dark:text-luxury-beige/70 mt-6 leading-relaxed">
+              <p className="font-sans text-sm text-slate-650 dark:text-luxury-beige/70 mt-6 leading-relaxed">
                 {activePoint.desc}
               </p>
             </div>
 
             <div className="pt-6 border-t border-forest-800/10 dark:border-white/10 flex items-center justify-between">
-              <span className="text-xs text-slate-500 dark:text-white/40 flex items-center space-x-1.5 font-semibold">
-                <Icon name="navigation" size={12} className="text-luxury-gold" />
+              <span className="text-xs text-slate-505 dark:text-white/40 flex items-center space-x-1.5 font-semibold">
+                <Navigation size={12} className="text-luxury-gold" />
                 <span>Directions from Asherwoods available</span>
               </span>
               <button 
@@ -944,8 +940,16 @@ const Attractions = () => {
   );
 };
 
-// 11. Custom Simulated Razorpay Portal Modal
-const RazorpayModal = ({ bookingDetails, onPaymentSuccess, onPaymentCancel }) => {
+// 10. Razorpay Gateway simulation
+interface RazorpayModalProps {
+  bookingDetails: Booking;
+  onPaymentSuccess: (paymentId: string) => void;
+  onPaymentCancel: () => void;
+}
+
+export const RazorpayModal: React.FC<RazorpayModalProps> = ({ 
+  bookingDetails, onPaymentSuccess, onPaymentCancel 
+}) => {
   const [method, setMethod] = React.useState("upi");
   const [loading, setLoading] = React.useState(false);
   const [statusMessage, setStatusMessage] = React.useState("");
@@ -999,7 +1003,7 @@ const RazorpayModal = ({ bookingDetails, onPaymentSuccess, onPaymentCancel }) =>
             onClick={onPaymentCancel} 
             className="absolute top-4 right-4 text-blue-200 hover:text-white transition"
           >
-            <Icon name="x" size={16} />
+            <X size={16} />
           </button>
         </div>
 
@@ -1007,7 +1011,7 @@ const RazorpayModal = ({ bookingDetails, onPaymentSuccess, onPaymentCancel }) =>
           <div className="p-12 flex flex-col items-center justify-center text-center">
             <div className="h-12 w-12 rounded-full border-4 border-blue-600 border-t-transparent animate-spin"></div>
             <p className="font-sans text-sm text-slate-300 mt-6">{statusMessage}</p>
-            <p className="text-[10px] text-slate-500 uppercase tracking-wider mt-2">Do not close or reload this window</p>
+            <p className="text-[10px] text-slate-505 mt-2 uppercase tracking-wider">Do not close or reload this window</p>
           </div>
         ) : (
           <div className="flex">
@@ -1051,9 +1055,9 @@ const RazorpayModal = ({ bookingDetails, onPaymentSuccess, onPaymentCancel }) =>
                 <div className="space-y-4">
                   <h4 className="text-xs uppercase tracking-widest text-slate-400 font-bold">Pay via UPI App</h4>
                   <div className="grid grid-cols-3 gap-2">
-                    <button onClick={() => setUpiId("guest@gpay")} className="bg-slate-950 hover:bg-slate-800 p-2 border border-slate-800 text-[10px] text-center rounded">GPay</button>
-                    <button onClick={() => setUpiId("guest@ybl")} className="bg-slate-950 hover:bg-slate-800 p-2 border border-slate-800 text-[10px] text-center rounded">PhonePe</button>
-                    <button onClick={() => setUpiId("guest@paytm")} className="bg-slate-950 hover:bg-slate-800 p-2 border border-slate-800 text-[10px] text-center rounded">Paytm</button>
+                    <button type="button" onClick={() => setUpiId("guest@gpay")} className="bg-slate-955 hover:bg-slate-800 p-2 border border-slate-800 text-[10px] text-center rounded">GPay</button>
+                    <button type="button" onClick={() => setUpiId("guest@ybl")} className="bg-slate-955 hover:bg-slate-800 p-2 border border-slate-800 text-[10px] text-center rounded">PhonePe</button>
+                    <button type="button" onClick={() => setUpiId("guest@paytm")} className="bg-slate-955 hover:bg-slate-800 p-2 border border-slate-800 text-[10px] text-center rounded">Paytm</button>
                   </div>
                   <div>
                     <label className="text-[9px] uppercase text-slate-500 block mb-1">Enter UPI ID / VPA</label>
@@ -1062,11 +1066,11 @@ const RazorpayModal = ({ bookingDetails, onPaymentSuccess, onPaymentCancel }) =>
                       placeholder="e.g. mobile@upi"
                       value={upiId}
                       onChange={(e) => setUpiId(e.target.value)}
-                      className="bg-slate-950 border border-slate-800 text-white text-xs p-2.5 focus:outline-none focus:border-blue-500 w-full rounded"
+                      className="bg-slate-955 border border-slate-800 text-white text-xs p-2.5 focus:outline-none focus:border-blue-500 w-full rounded"
                     />
                   </div>
-                  <div className="flex items-center space-x-3 bg-slate-950 p-2.5 border border-slate-800 rounded">
-                    <div className="h-12 w-12 bg-white flex items-center justify-center text-slate-900 font-bold p-1 rounded">
+                  <div className="flex items-center space-x-3 bg-slate-955 p-2.5 border border-slate-800 rounded">
+                    <div className="h-12 w-12 bg-white flex items-center justify-center text-slate-900 font-bold p-1 rounded flex-shrink-0">
                       <div className="grid grid-cols-4 gap-0.5 w-full h-full opacity-80">
                         <div className="bg-black"></div><div className="bg-black"></div><div className="bg-white"></div><div className="bg-black"></div>
                         <div className="bg-white"></div><div className="bg-black"></div><div className="bg-black"></div><div className="bg-black"></div>
@@ -1076,7 +1080,7 @@ const RazorpayModal = ({ bookingDetails, onPaymentSuccess, onPaymentCancel }) =>
                     </div>
                     <div>
                       <p className="text-[10px] font-bold">Simulate QR Scan</p>
-                      <p className="text-[9px] text-slate-500">Scan this QR code in your UPI application to pay.</p>
+                      <p className="text-[9px] text-slate-505">Scan this QR code in your UPI application to pay.</p>
                     </div>
                   </div>
                 </div>
@@ -1092,7 +1096,7 @@ const RazorpayModal = ({ bookingDetails, onPaymentSuccess, onPaymentCancel }) =>
                       placeholder="4111 2222 3333 4444"
                       value={cardNo}
                       onChange={(e) => setCardNo(e.target.value)}
-                      className="bg-slate-950 border border-slate-800 text-white text-xs p-2 focus:outline-none focus:border-blue-500 w-full rounded"
+                      className="bg-slate-955 border border-slate-800 text-white text-xs p-2 focus:outline-none focus:border-blue-500 w-full rounded"
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-2">
@@ -1103,7 +1107,7 @@ const RazorpayModal = ({ bookingDetails, onPaymentSuccess, onPaymentCancel }) =>
                         placeholder="12/29"
                         value={cardExpiry}
                         onChange={(e) => setCardExpiry(e.target.value)}
-                        className="bg-slate-950 border border-slate-800 text-white text-xs p-2 focus:outline-none focus:border-blue-500 w-full rounded"
+                        className="bg-slate-955 border border-slate-800 text-white text-xs p-2 focus:outline-none focus:border-blue-500 w-full rounded"
                       />
                     </div>
                     <div>
@@ -1113,7 +1117,7 @@ const RazorpayModal = ({ bookingDetails, onPaymentSuccess, onPaymentCancel }) =>
                         placeholder="***"
                         value={cardCVV}
                         onChange={(e) => setCardCVV(e.target.value)}
-                        className="bg-slate-950 border border-slate-800 text-white text-xs p-2 focus:outline-none focus:border-blue-500 w-full rounded"
+                        className="bg-slate-955 border border-slate-800 text-white text-xs p-2 focus:outline-none focus:border-blue-500 w-full rounded"
                       />
                     </div>
                   </div>
@@ -1124,7 +1128,7 @@ const RazorpayModal = ({ bookingDetails, onPaymentSuccess, onPaymentCancel }) =>
                       placeholder="John Doe"
                       value={cardName}
                       onChange={(e) => setCardName(e.target.value)}
-                      className="bg-slate-950 border border-slate-800 text-white text-xs p-2 focus:outline-none focus:border-blue-500 w-full rounded"
+                      className="bg-slate-955 border border-slate-800 text-white text-xs p-2 focus:outline-none focus:border-blue-500 w-full rounded"
                     />
                   </div>
                 </div>
@@ -1136,19 +1140,20 @@ const RazorpayModal = ({ bookingDetails, onPaymentSuccess, onPaymentCancel }) =>
                     {method === "net" ? "Popular Banks" : "Popular Wallets"}
                   </h4>
                   <div className="space-y-2">
-                    <button onClick={triggerPayment} className="w-full bg-slate-950 hover:bg-slate-800 p-3 border border-slate-800 text-xs text-left rounded flex items-center justify-between">
+                    <button type="button" onClick={triggerPayment} className="w-full bg-slate-955 hover:bg-slate-800 p-3 border border-slate-800 text-xs text-left rounded flex items-center justify-between">
                       <span>{method === "net" ? "State Bank of India" : "Paytm Wallet"}</span>
-                      <Icon name="chevron-right" size={12} className="text-blue-500" />
+                      <ChevronRight size={12} className="text-blue-500" />
                     </button>
-                    <button onClick={triggerPayment} className="w-full bg-slate-950 hover:bg-slate-800 p-3 border border-slate-800 text-xs text-left rounded flex items-center justify-between">
+                    <button type="button" onClick={triggerPayment} className="w-full bg-slate-955 hover:bg-slate-800 p-3 border border-slate-800 text-xs text-left rounded flex items-center justify-between">
                       <span>{method === "net" ? "HDFC Bank" : "Amazon Pay"}</span>
-                      <Icon name="chevron-right" size={12} className="text-blue-500" />
+                      <ChevronRight size={12} className="text-blue-500" />
                     </button>
                   </div>
                 </div>
               )}
 
               <button 
+                type="button"
                 onClick={triggerPayment}
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold uppercase tracking-wider text-xs py-3.5 mt-6 rounded shadow-md"
               >
@@ -1162,28 +1167,37 @@ const RazorpayModal = ({ bookingDetails, onPaymentSuccess, onPaymentCancel }) =>
   );
 };
 
-// 12. Interactive Booking Engine Modal
-const BookingModal = ({ room, onClose, onBookingSuccess, activeGuest }) => {
+// 11. Interactive Booking Engine Modal
+interface BookingModalProps {
+  room: Room;
+  onClose: () => void;
+  onBookingSuccess: (booking: Booking) => void;
+  activeGuest: GuestSession | null;
+}
+
+export const BookingModal: React.FC<BookingModalProps> = ({ 
+  room, onClose, onBookingSuccess, activeGuest 
+}) => {
   const [step, setStep] = React.useState(1);
   const [checkIn, setCheckIn] = React.useState("");
   const [checkOut, setCheckOut] = React.useState("");
   const [guestsCount, setGuestsCount] = React.useState(2);
   const [couponCode, setCouponCode] = React.useState("");
   const [couponError, setCouponError] = React.useState("");
-  const [appliedCoupon, setAppliedCoupon] = React.useState(null);
+  const [appliedCoupon, setAppliedCoupon] = React.useState<Coupon | null>(null);
 
   const [guestName, setGuestName] = React.useState(activeGuest ? activeGuest.name : "");
   const [guestEmail, setGuestEmail] = React.useState(activeGuest ? activeGuest.email : "");
   const [guestPhone, setGuestPhone] = React.useState(activeGuest ? activeGuest.phone : "");
 
   const [showPaymentPortal, setShowPaymentPortal] = React.useState(false);
-  const [generatedBooking, setGeneratedBooking] = React.useState(null);
+  const [generatedBooking, setGeneratedBooking] = React.useState<Booking | null>(null);
 
   const nightsCount = React.useMemo(() => {
     if (!checkIn || !checkOut) return 1;
     const checkInDate = new Date(checkIn);
     const checkOutDate = new Date(checkOut);
-    const diffTime = Math.abs(checkOutDate - checkInDate);
+    const diffTime = Math.abs(checkOutDate.getTime() - checkInDate.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays || 1;
   }, [checkIn, checkOut]);
@@ -1209,7 +1223,7 @@ const BookingModal = ({ room, onClose, onBookingSuccess, activeGuest }) => {
 
   const verifyCoupon = () => {
     setCouponError("");
-    const coupons = window.dbService.getCoupons();
+    const coupons = dbService.getCoupons();
     const found = coupons.find(c => c.code.toUpperCase() === couponCode.trim().toUpperCase());
     
     if (!found) {
@@ -1228,7 +1242,7 @@ const BookingModal = ({ room, onClose, onBookingSuccess, activeGuest }) => {
     setCouponError("");
   };
 
-  const handleNextStep = (e) => {
+  const handleNextStep = (e: React.FormEvent) => {
     e.preventDefault();
     if (step === 1) {
       if (!checkIn || !checkOut) {
@@ -1242,7 +1256,7 @@ const BookingModal = ({ room, onClose, onBookingSuccess, activeGuest }) => {
         return;
       }
 
-      const bookingData = {
+      const bookingData: Booking = {
         id: "BK-" + Math.floor(10000 + Math.random() * 90000),
         roomId: room.id,
         roomName: room.name,
@@ -1266,14 +1280,15 @@ const BookingModal = ({ room, onClose, onBookingSuccess, activeGuest }) => {
     }
   };
 
-  const handlePaymentCompleted = (paymentId) => {
-    const confirmedBooking = {
+  const handlePaymentCompleted = (paymentId: string) => {
+    if (!generatedBooking) return;
+    const confirmedBooking: Booking = {
       ...generatedBooking,
       status: "Confirmed",
       paymentId
     };
 
-    window.dbService.addBooking(confirmedBooking);
+    dbService.addBooking(confirmedBooking);
     setShowPaymentPortal(false);
     onBookingSuccess(confirmedBooking);
   };
@@ -1292,7 +1307,7 @@ const BookingModal = ({ room, onClose, onBookingSuccess, activeGuest }) => {
               onClick={onClose}
               className="text-white hover:text-luxury-gold transition duration-300"
             >
-              <Icon name="x" size={20} />
+              <X size={20} />
             </button>
           </div>
 
@@ -1377,7 +1392,7 @@ const BookingModal = ({ room, onClose, onBookingSuccess, activeGuest }) => {
                     {couponError && <p className="text-red-500 text-xs mt-1.5">{couponError}</p>}
                     {appliedCoupon && (
                       <p className="text-green-600 text-xs mt-1.5 font-semibold flex items-center space-x-1">
-                        <Icon name="check" size={12} />
+                        <Check size={12} />
                         <span>Code '{appliedCoupon.code}' applied! ({appliedCoupon.desc})</span>
                       </p>
                     )}
@@ -1449,7 +1464,7 @@ const BookingModal = ({ room, onClose, onBookingSuccess, activeGuest }) => {
               )}
             </div>
 
-            <div className="md:col-span-5 bg-forest-900 dark:bg-forest-950 text-white p-6 md:p-8 border-l border-forest-800/20 dark:border-white/5 flex flex-col justify-between">
+            <div className="md:col-span-5 bg-forest-900 dark:bg-forest-955 text-white p-6 md:p-8 border-l border-forest-800/20 dark:border-white/5 flex flex-col justify-between">
               <div>
                 <h4 className="font-serif text-md text-luxury-gold font-bold mb-4 font-semibold">Pricing Breakdown</h4>
                 <div className="space-y-3.5 text-sm font-sans">
@@ -1493,7 +1508,7 @@ const BookingModal = ({ room, onClose, onBookingSuccess, activeGuest }) => {
         </div>
       </div>
 
-      {showPaymentPortal && (
+      {showPaymentPortal && generatedBooking && (
         <RazorpayModal 
           bookingDetails={generatedBooking}
           onPaymentSuccess={handlePaymentCompleted}
@@ -1504,23 +1519,34 @@ const BookingModal = ({ room, onClose, onBookingSuccess, activeGuest }) => {
   );
 };
 
-// 13. Guest Portal / Profile & Wishlist
-const GuestPortal = ({ onClose, onViewChange, wishlist = [], toggleWishlist, activeGuest, onLoginGuest, onLogoutGuest }) => {
-  const [activeTab, setActiveTab] = React.useState("bookings");
-  const [rooms, setRooms] = React.useState([]);
-  const [bookings, setBookings] = React.useState([]);
+// 12. Guest Portal / Profile & Wishlist
+interface GuestPortalProps {
+  onClose: () => void;
+  onViewChange: (view: string) => void;
+  wishlist: string[];
+  toggleWishlist: (id: string) => void;
+  activeGuest: GuestSession | null;
+  onLoginGuest: (guest: GuestSession) => void;
+  onLogoutGuest: () => void;
+}
 
-  // Login states
+export const GuestPortal: React.FC<GuestPortalProps> = ({ 
+  onClose, onViewChange, wishlist = [], toggleWishlist, activeGuest, onLoginGuest, onLogoutGuest 
+}) => {
+  const [activeTab, setActiveTab] = React.useState("bookings");
+  const [rooms, setRooms] = React.useState<Room[]>([]);
+  const [bookings, setBookings] = React.useState<Booking[]>([]);
+
   const [loginEmail, setLoginEmail] = React.useState("");
   const [loginName, setLoginName] = React.useState("");
   const [isRegistering, setIsRegistering] = React.useState(false);
 
   React.useEffect(() => {
-    setRooms(window.dbService.getRooms());
-    setBookings(window.dbService.getBookings());
+    setRooms(dbService.getRooms());
+    setBookings(dbService.getBookings());
   }, [activeGuest]);
 
-  const handleAuthSubmit = (e) => {
+  const handleAuthSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!loginEmail) return;
 
@@ -1529,7 +1555,7 @@ const GuestPortal = ({ onClose, onViewChange, wishlist = [], toggleWishlist, act
       return;
     }
 
-    const userData = {
+    const userData: GuestSession = {
       email: loginEmail,
       name: isRegistering ? loginName : (loginEmail.split("@")[0].charAt(0).toUpperCase() + loginEmail.split("@")[0].slice(1)),
       phone: "9876543210"
@@ -1551,7 +1577,6 @@ const GuestPortal = ({ onClose, onViewChange, wishlist = [], toggleWishlist, act
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-forest-950/70 backdrop-blur-sm animate-fade-in">
       <div className="bg-luxury-warmwhite dark:bg-forest-950 border border-forest-800/20 dark:border-white/10 rounded-sm w-full max-w-3xl overflow-hidden shadow-2xl relative flex flex-col max-h-[85vh]">
         
-        {/* Header */}
         <div className="bg-forest-900 dark:bg-forest-950 text-white p-6 border-b border-forest-800/20 dark:border-white/5 flex justify-between items-center">
           <div>
             <span className="text-[10px] uppercase tracking-widest text-luxury-gold font-bold">Guest Portal</span>
@@ -1563,17 +1588,16 @@ const GuestPortal = ({ onClose, onViewChange, wishlist = [], toggleWishlist, act
             onClick={onClose}
             className="text-white hover:text-luxury-gold transition"
           >
-            <Icon name="x" size={20} />
+            <X size={20} />
           </button>
         </div>
 
         {!activeGuest ? (
-          /* Login Screen */
           <div className="p-8 max-w-md mx-auto w-full my-auto flex flex-col justify-center items-center">
             <h4 className="font-serif text-xl text-forest-900 dark:text-luxury-gold font-bold mb-2">
               {isRegistering ? "Register Guest Profile" : "Guest Login"}
             </h4>
-            <p className="text-xs text-slate-500 dark:text-luxury-beige/60 mb-6 text-center">
+            <p className="text-xs text-slate-505 dark:text-luxury-beige/60 mb-6 text-center">
               Sign in to view booking logs, manage cabin wishlists, and unlock member-exclusive gold rates.
             </p>
 
@@ -1612,6 +1636,7 @@ const GuestPortal = ({ onClose, onViewChange, wishlist = [], toggleWishlist, act
             </form>
 
             <button 
+              type="button"
               onClick={() => setIsRegistering(!isRegistering)}
               className="text-xs text-forest-900 dark:text-luxury-gold hover:underline mt-6"
             >
@@ -1619,9 +1644,7 @@ const GuestPortal = ({ onClose, onViewChange, wishlist = [], toggleWishlist, act
             </button>
           </div>
         ) : (
-          /* Profile Details and tabs */
           <div className="flex-1 flex flex-col overflow-hidden">
-            {/* Tabs Nav */}
             <div className="bg-forest-900/5 dark:bg-forest-900/20 border-b border-forest-800/10 dark:border-white/5 flex px-4">
               <button 
                 onClick={() => setActiveTab("bookings")}
@@ -1647,14 +1670,13 @@ const GuestPortal = ({ onClose, onViewChange, wishlist = [], toggleWishlist, act
               </button>
             </div>
 
-            {/* Tab Pane contents */}
             <div className="flex-1 overflow-y-auto p-6">
               {activeTab === "bookings" && (
                 <div className="space-y-4">
                   {guestBookings.length === 0 ? (
                     <div className="text-center py-12 text-slate-500">
-                      <Icon name="history" size={32} className="text-slate-400 mx-auto mb-3" />
-                      <p className="text-sm">No historical stays or bookings recorded.</p>
+                      <History size={32} className="text-slate-400 mx-auto mb-3" />
+                      <p className="text-sm">No stays or bookings recorded.</p>
                       <button 
                         onClick={() => {
                           onViewChange("rooms");
@@ -1676,7 +1698,7 @@ const GuestPortal = ({ onClose, onViewChange, wishlist = [], toggleWishlist, act
                             }`}>{b.status}</span>
                           </div>
                           <h4 className="font-serif text-lg text-forest-900 dark:text-luxury-gold font-bold mt-1.5">{b.roomName}</h4>
-                          <p className="text-xs text-slate-500 dark:text-luxury-beige/60 mt-1">
+                          <p className="text-xs text-slate-550 dark:text-luxury-beige/60 mt-1">
                             Stay: {b.checkIn} to {b.checkOut} ({b.totalNights} {b.totalNights === 1 ? 'Night' : 'Nights'})
                           </p>
                         </div>
@@ -1700,23 +1722,23 @@ const GuestPortal = ({ onClose, onViewChange, wishlist = [], toggleWishlist, act
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {wishlistedRooms.length === 0 ? (
                     <div className="col-span-2 text-center py-12 text-slate-500">
-                      <Icon name="heart" size={32} className="text-slate-400 mx-auto mb-3" />
+                      <Heart size={32} className="text-slate-400 mx-auto mb-3" />
                       <p className="text-sm">Your cabin wishlist is currently empty.</p>
                     </div>
                   ) : (
                     wishlistedRooms.map((room) => (
                       <div key={room.id} className="bg-white dark:bg-forest-900/30 border border-forest-800/10 dark:border-white/5 rounded-sm overflow-hidden shadow-md relative group flex flex-col h-full">
-                        <img src={room.image} className="h-40 w-full object-cover" />
+                        <img src={room.image} className="h-40 w-full object-cover" alt={room.name} />
                         <button 
                           onClick={() => toggleWishlist(room.id)}
                           className="absolute top-2 right-2 h-7 w-7 rounded-full bg-white/20 text-white flex items-center justify-center hover:bg-white hover:text-red-500 transition duration-300"
                         >
-                          <Icon name="x" size={12} />
+                          <X size={12} />
                         </button>
                         <div className="p-4 flex-1 flex flex-col justify-between">
                           <div>
                             <h4 className="font-serif text-md font-bold text-forest-900 dark:text-luxury-gold">{room.name}</h4>
-                            <p className="text-xs text-slate-500 dark:text-luxury-beige/60 mt-1">{room.occupancy}</p>
+                            <p className="text-xs text-slate-550 dark:text-luxury-beige/60 mt-1">{room.occupancy}</p>
                           </div>
                           <div className="border-t border-forest-800/10 dark:border-white/5 pt-3 mt-3 flex justify-between items-center">
                             <span className="font-serif text-md font-bold text-forest-900 dark:text-luxury-gold">₹{room.price}/n</span>
@@ -1744,8 +1766,8 @@ const GuestPortal = ({ onClose, onViewChange, wishlist = [], toggleWishlist, act
   );
 };
 
-// 14. Live FAQ AI Chat Assistant Drawer
-const ChatAssistant = () => {
+// 13. AI Live Chat Concierge Assistant Component
+export const ChatAssistant: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [messages, setMessages] = React.useState([
     { sender: "bot", text: "Greetings! I am Asher, your virtual mountain concierge. How may I guide your luxury stay at Asherwoods today?" }
@@ -1760,16 +1782,14 @@ const ChatAssistant = () => {
     { q: "Is Wi-Fi high-speed?", a: "We have dedicated high-speed fiber routers inside every cottage (up to 100 Mbps) to ensure seamless workcations for digital nomads." }
   ];
 
-  const handleSend = (text) => {
+  const handleSend = (text: string) => {
     if (!text.trim()) return;
 
-    // Append user message
     const userMsg = { sender: "user", text };
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setIsTyping(true);
 
-    // Formulate response
     setTimeout(() => {
       let reply = "I'm still learning the paths of the mountains! For detailed reservations or queries, please feel free to call our direct reservation desk at +91 98765 43210.";
       
@@ -1795,18 +1815,15 @@ const ChatAssistant = () => {
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
-      {/* Floating Chat Icon */}
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-forest-900 hover:bg-forest-800 dark:bg-luxury-gold dark:hover:bg-yellow-600 text-white dark:text-forest-950 p-4 rounded-full shadow-2xl flex items-center justify-center transform hover:scale-110 transition duration-300 border border-luxury-gold/20"
+        className="bg-forest-900 hover:bg-forest-800 dark:bg-luxury-gold dark:hover:bg-yellow-600 text-white dark:text-forest-955 p-4 rounded-full shadow-2xl flex items-center justify-center transform hover:scale-110 transition duration-300 border border-luxury-gold/25"
       >
-        <Icon name={isOpen ? "x" : "message-square"} size={24} />
+        {isOpen ? <X size={24} /> : <MessageSquare size={24} />}
       </button>
 
-      {/* Chat Box Drawer */}
       {isOpen && (
         <div className="absolute bottom-16 right-0 w-80 md:w-96 bg-luxury-warmwhite dark:bg-forest-950 border border-forest-800/20 dark:border-white/10 rounded-sm shadow-2xl overflow-hidden flex flex-col h-[450px]">
-          {/* Header */}
           <div className="bg-forest-900 p-4 border-b border-forest-800/10 text-white flex items-center space-x-3">
             <span className="h-2 w-2 rounded-full bg-green-400 animate-ping"></span>
             <div>
@@ -1815,14 +1832,13 @@ const ChatAssistant = () => {
             </div>
           </div>
 
-          {/* Messages */}
           <div className="flex-1 p-4 overflow-y-auto space-y-3 flex flex-col">
             {messages.map((m, i) => (
               <div 
                 key={i}
                 className={`max-w-[75%] p-3 text-xs leading-relaxed rounded-sm ${
                   m.sender === "bot" 
-                    ? "bg-forest-900/10 dark:bg-white/5 text-slate-850 dark:text-luxury-warmwhite self-start" 
+                    ? "bg-forest-900/10 dark:bg-white/5 text-slate-800 dark:text-luxury-warmwhite self-start" 
                     : "bg-forest-900 text-white self-end"
                 }`}
               >
@@ -1836,11 +1852,11 @@ const ChatAssistant = () => {
             )}
           </div>
 
-          {/* Suggested FAQs */}
           <div className="px-4 py-2 border-t border-forest-800/10 dark:border-white/5 flex gap-1.5 overflow-x-auto whitespace-nowrap scrollbar-none">
             {faqs.map((f, i) => (
               <button 
                 key={i} 
+                type="button"
                 onClick={() => handleSend(f.q)}
                 className="text-[9px] bg-forest-900/5 dark:bg-white/5 border border-forest-800/10 dark:border-white/10 hover:border-luxury-gold text-slate-800 dark:text-luxury-beige/80 px-2 py-1.5 rounded-sm transition"
               >
@@ -1849,21 +1865,21 @@ const ChatAssistant = () => {
             ))}
           </div>
 
-          {/* Input field */}
           <div className="p-3 border-t border-forest-800/10 dark:border-white/5 flex space-x-2">
             <input 
               type="text" 
-              placeholder="Ask me anything about Asherwoods..."
+              placeholder="Ask me anything..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSend(input)}
               className="bg-white/80 dark:bg-forest-900/50 border border-forest-800/10 dark:border-white/10 text-slate-800 dark:text-white px-3 py-2 text-xs focus:outline-none focus:border-luxury-gold rounded-sm flex-1"
             />
             <button 
+              type="button"
               onClick={() => handleSend(input)}
-              className="bg-forest-900 hover:bg-forest-800 dark:bg-luxury-gold text-white dark:text-forest-950 px-3 flex items-center justify-center rounded-sm transition duration-300"
+              className="bg-forest-900 hover:bg-forest-800 dark:bg-luxury-gold text-white dark:text-forest-955 px-3 flex items-center justify-center rounded-sm transition duration-300"
             >
-              <Icon name="send" size={12} />
+              <Send size={12} />
             </button>
           </div>
         </div>
@@ -1872,26 +1888,28 @@ const ChatAssistant = () => {
   );
 };
 
-// 15. Premium Footer
-const Footer = ({ onViewChange }) => {
+// 14. Footer Component
+interface FooterProps {
+  onViewChange: (view: string) => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onViewChange }) => {
   return (
     <footer className="bg-forest-950 text-white border-t border-forest-900/50 py-16 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-          {/* Col 1 Brand */}
           <div className="space-y-4">
             <h3 className="font-serif text-xl tracking-widest text-luxury-gold font-bold">ASHERWOODS</h3>
             <p className="font-sans text-xs text-luxury-beige/60 leading-relaxed font-light">
-              Premium Luxury Resort & Cafe nestled along the banking banks of Parvati River in Kasol, Himachal Pradesh.
+              Premium Luxury Resort & Cafe nestled along the banks of Parvati River in Kasol, Himachal Pradesh.
             </p>
             <div className="flex space-x-4 pt-4">
-              <a href="#" className="text-white hover:text-luxury-gold transition"><Icon name="instagram" size={16} /></a>
-              <a href="#" className="text-white hover:text-luxury-gold transition"><Icon name="facebook" size={16} /></a>
-              <a href="#" className="text-white hover:text-luxury-gold transition"><Icon name="twitter" size={16} /></a>
+              <a href="#" className="text-white hover:text-luxury-gold transition"><Instagram size={16} /></a>
+              <a href="#" className="text-white hover:text-luxury-gold transition"><Facebook size={16} /></a>
+              <a href="#" className="text-white hover:text-luxury-gold transition"><Twitter size={16} /></a>
             </div>
           </div>
 
-          {/* Col 2 Quick Links */}
           <div>
             <h4 className="font-serif text-sm uppercase tracking-widest text-luxury-gold font-bold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-xs text-luxury-beige/70">
@@ -1902,21 +1920,19 @@ const Footer = ({ onViewChange }) => {
             </ul>
           </div>
 
-          {/* Col 3 Policies */}
           <div>
             <h4 className="font-serif text-sm uppercase tracking-widest text-luxury-gold font-bold mb-4">Policies</h4>
             <ul className="space-y-2 text-xs text-luxury-beige/70">
-              <li><button onClick={() => alert("Simulation Refund Policy: Free cancellations up to 72 hours prior to check-in. 50% charge if within 72 hours.")} className="hover:text-luxury-gold transition">Refund Policy</button></li>
-              <li><button onClick={() => alert("Simulation Privacy: Guest details are secured internally for booking reference log validation only.")} className="hover:text-luxury-gold transition">Privacy Policy</button></li>
-              <li><button onClick={() => alert("Terms & Conditions: Guests must show government identity verification check during resort arrival.")} className="hover:text-luxury-gold transition">Terms & Conditions</button></li>
+              <li><button onClick={() => alert("Refund Policy: Free cancellations up to 72 hours prior to stay.")} className="hover:text-luxury-gold transition">Refund Policy</button></li>
+              <li><button onClick={() => alert("Privacy Policy: Guest logs are private.")} className="hover:text-luxury-gold transition">Privacy Policy</button></li>
+              <li><button onClick={() => alert("Terms & Conditions: Identity verification required at check-in.")} className="hover:text-luxury-gold transition">Terms & Conditions</button></li>
             </ul>
           </div>
 
-          {/* Col 4 Newsletter */}
           <div className="space-y-4">
-            <h4 className="font-serif text-sm uppercase tracking-widest text-luxury-gold font-bold mb-4 font-semibold">Resort Newsletter</h4>
+            <h4 className="font-serif text-sm uppercase tracking-widest text-luxury-gold font-bold mb-4">Resort Newsletter</h4>
             <p className="font-sans text-xs text-luxury-beige/60 font-light">
-              Subscribe to receive updates about seasonal snowy packages and gourmet offers.
+              Subscribe to receive updates about seasonal snowy packages.
             </p>
             <div className="flex space-x-1.5">
               <input 
@@ -1941,24 +1957,5 @@ const Footer = ({ onViewChange }) => {
       </div>
     </footer>
   );
-};
-
-// Bind to window for global access
-window.AsherwoodsComponents = {
-  Icon,
-  Navbar,
-  Hero,
-  BookingWidget,
-  WhyChooseUs,
-  Rooms,
-  CafeMenu,
-  Experiences,
-  Gallery,
-  Attractions,
-  RazorpayModal,
-  BookingModal,
-  GuestPortal,
-  ChatAssistant,
-  Footer
 };
 

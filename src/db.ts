@@ -1,6 +1,7 @@
-// Asherwoods Cafe & Cottages - Mock Database Service (Supabase Fallback)
+// Asherwoods Cafe & Cottages - Typed Database Service (Supabase Fallback)
+import { Room, CafeItem, Review, Coupon, Offer, BlogPost, Booking } from './types';
 
-const INITIAL_ROOMS = [
+const INITIAL_ROOMS: Room[] = [
   {
     id: "mountain-view",
     name: "Mountain View Cottage",
@@ -83,58 +84,45 @@ const INITIAL_ROOMS = [
   }
 ];
 
-const INITIAL_CAFE_ITEMS = [
-  // Coffee
+const INITIAL_CAFE_ITEMS: CafeItem[] = [
   { id: "c1", category: "Coffee", name: "Asherwoods Special Latte", price: 190, desc: "Double shot espresso with steamed milk, walnut extract, and a pinch of cinnamon.", type: "Veg", image: "https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=400&q=80" },
   { id: "c2", category: "Coffee", name: "Himachali Honey Cappuccino", price: 180, desc: "Classic cappuccino sweetened with organic local forest honey.", type: "Veg", image: "https://images.unsplash.com/photo-1570968915860-54d5c301fc9f?auto=format&fit=crop&w=400&q=80" },
   { id: "c3", category: "Coffee", name: "French Press Mountain Brew", price: 160, desc: "Single-origin Arabica beans sourced from organic estates, freshly pressed.", type: "Veg", image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=400&q=80" },
-  
-  // Israeli Food
   { id: "i1", category: "Israeli Food", name: "Premium Shakshuka", price: 320, desc: "Poached eggs in a rich, spiced tomato and bell pepper sauce, served with warm pita bread.", type: "Non-Veg", image: "https://images.unsplash.com/photo-1590412200988-a436bb705300?auto=format&fit=crop&w=400&q=80" },
-  { id: "i2", category: "Israeli Food", name: "Asherwoods Hummus Platter", price: 290, desc: "Creamy homemade hummus topped with warm olive oil, chickpeas, pine nuts, served with falafel and pickle.", type: "Veg", image: "https://images.unsplash.com/photo-1541518763669-27fef04b14ea?auto=format&fit=crop&w=400&q=80" },
+  { id: "i2", category: "Israeli Food", name: "Asherwoods Hummus Platter", price: 290, desc: "Creamy homemade hummus topped with warm olive oil, chickpeas, and warm pita bread.", type: "Veg", image: "https://images.unsplash.com/photo-1541518763669-27fef04b14ea?auto=format&fit=crop&w=400&q=80" },
   { id: "i3", category: "Israeli Food", name: "Falafel Laffa Wrap", price: 240, desc: "Crispy falafel balls rolled in fresh flatbread with tahini, salad, and amba sauce.", type: "Veg", image: "https://images.unsplash.com/photo-1547058881-aa0edd92aab3?auto=format&fit=crop&w=400&q=80" },
-
-  // Breakfast
   { id: "b1", category: "Breakfast", name: "Mountain Hiker's Platter", price: 350, desc: "Two eggs your style, baked beans, grilled tomatoes, hash browns, chicken sausages, and butter toast.", type: "Non-Veg", image: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=400&q=80" },
   { id: "b2", category: "Breakfast", name: "Avocado & Goat Cheese Toast", price: 280, desc: "Mashed avocado, crumbled local goat cheese, cherry tomatoes on sourdough bread.", type: "Veg", image: "https://images.unsplash.com/photo-1541518763669-27fef04b14ea?auto=format&fit=crop&w=400&q=80" },
-
-  // Pizza & Pasta
   { id: "p1", category: "Pizza", name: "Wild Mushroom & Truffle Pizza", price: 420, desc: "Hand-tossed thin crust, wild Himalayan mushrooms, white truffle oil, fresh mozzarella.", type: "Veg", image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=400&q=80" },
   { id: "p2", category: "Pasta", name: "Pesto Genovese Penne", price: 340, desc: "Penne tossed in creamy fresh basil and pine nut pesto with extra virgin olive oil.", type: "Veg", image: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=400&q=80" },
-
-  // Burgers
-  { id: "bu1", category: "Burgers", name: "Crispy Paneer Chimichurri Burger", price: 260, desc: "Crispy herb-crusted paneer patty, chimichurri mayo, lettuce, tomato in brioche bun.", type: "Veg", image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&q=80" },
-
-  // Desserts
+  { id: "bu1", category: "Burgers", name: "Crispy Paneer Chimichurri Burger", price: 260, desc: "Crispy paneer patty, chimichurri mayo, lettuce, tomato in brioche bun.", type: "Veg", image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&q=80" },
   { id: "d1", category: "Desserts", name: "Hot Apple Pie with Ice Cream", price: 220, desc: "Traditional pie stuffed with local Himachali apples, served with vanilla bean ice cream.", type: "Veg", image: "https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=400&q=80" },
-
-  // Himachali Specials
-  { id: "h1", category: "Himachali Specials", name: "Siddu with Ghee & Honey", price: 180, desc: "Traditional steamed wheat bun stuffed with walnut-poppy seed paste, served hot with liquid ghee.", type: "Veg", image: "https://images.unsplash.com/photo-1626132647523-66f5bf380027?auto=format&fit=crop&w=400&q=80" }
+  { id: "h1", category: "Himachali Specials", name: "Siddu with Ghee & Honey", price: 180, desc: "Traditional steamed wheat bun stuffed with poppy seed paste, served hot with liquid ghee.", type: "Veg", image: "https://images.unsplash.com/photo-1626132647523-66f5bf380027?auto=format&fit=crop&w=400&q=80" }
 ];
 
-const INITIAL_REVIEWS = [
+const INITIAL_REVIEWS: Review[] = [
   { id: "r1", guestName: "Aarav Sharma", rating: 5, date: "2026-06-15", text: "Absolute heaven! The riverside cottage allows you to fall asleep to the river sound. The cafe serves the best Israeli food in Kasol.", avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=100&q=80", source: "Google Reviews" },
   { id: "r2", guestName: "Sarah Jenkins", rating: 5, date: "2026-07-02", text: "Beautiful wooden cottages with stunning views of the valley. Exceptional hospitality and the honeycomb cappuccino is a must-try!", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80", source: "Booking.com" },
   { id: "r3", guestName: "Vikram Malhotra", rating: 5, date: "2026-07-08", text: "Top-notch luxury resort experience. The bonfire nights and nature walks organized by them were memorable. Highly recommended.", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80", source: "Google Reviews" }
 ];
 
-const INITIAL_COUPONS = [
-  { code: "ASHER10", discountType: "percentage", value: 10, minNights: 1, desc: "Get 10% off on any stay duration." },
+const INITIAL_COUPONS: Coupon[] = [
+  { code: "WELCOME10", discountType: "percentage", value: 10, minNights: 1, desc: "Get 10% off on any stay duration." },
   { code: "WINTER20", discountType: "percentage", value: 20, minNights: 3, desc: "Stay 3 nights or more and get 20% off." },
   { code: "RIVERSIDE", discountType: "flat", value: 1000, minNights: 2, desc: "Flat ₹1000 off on minimum 2 nights stay." }
 ];
 
-const INITIAL_OFFERS = [
+const INITIAL_OFFERS: Offer[] = [
   { id: "o1", title: "Monsoon Serenity Package", desc: "Enjoy 15% off plus a complimentary Himachali Siddu platter and local apple cider upon arrival. Valid for stays until Sept 30.", code: "MONSOON15" },
-  { id: "o2", title: "Workcation Long Stay Offer", desc: "Book for 7+ days and receive high-speed dedicated router access, daily complimentary espresso, and 25% laundry discount.", code: "WORK7" }
+  { id: "o2", title: "Workcation Long Stay Offer", desc: "Book for 7+ days and receive high-speed dedicated router access and daily complimentary espresso.", code: "WORK7" }
 ];
 
-const INITIAL_BLOGS = [
+const INITIAL_BLOGS: BlogPost[] = [
   { id: "b1", title: "Top 5 Treks Around Kasol: A Guide for Adventure Lovers", date: "2026-05-12", excerpt: "Kasol is the gateway to some of the most breath-taking trekking trails in the Himalayas. From the hot springs of Kheerganga to the ancient independent village of Malana...", author: "Resort Naturalist", image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80", content: "Details about treks..." },
   { id: "b2", title: "Savoring Siddu: The Culinary Soul of Himachal Pradesh", date: "2026-06-20", excerpt: "Siddu is more than just food; it is a tradition passed down through generations in Himachali families. Learn how we make Siddu at our cafe using local herbs and fresh ghee...", author: "Head Chef, Asherwoods", image: "https://images.unsplash.com/photo-1626132647523-66f5bf380027?auto=format&fit=crop&w=600&q=80", content: "Details about Siddu..." }
 ];
 
-const INITIAL_BOOKINGS = [
+const INITIAL_BOOKINGS: Booking[] = [
   {
     id: "BK-98472",
     roomId: "luxury-wooden",
@@ -147,8 +135,8 @@ const INITIAL_BOOKINGS = [
     guestsCount: 2,
     basePrice: 3500,
     totalNights: 3,
-    discount: 2100, // 20% discount coupon applied
-    gst: 1512, // 18% of subtotal
+    discount: 2100,
+    gst: 1512,
     totalPrice: 9912,
     couponCode: "WINTER20",
     status: "Confirmed",
@@ -167,7 +155,7 @@ const INITIAL_BOOKINGS = [
     guestsCount: 1,
     basePrice: 2500,
     totalNights: 2,
-    discount: 500, // 10% coupon WELCOME10
+    discount: 500,
     gst: 810,
     totalPrice: 5310,
     couponCode: "WELCOME10",
@@ -177,7 +165,6 @@ const INITIAL_BOOKINGS = [
   }
 ];
 
-// DB Helper class
 class DatabaseService {
   constructor() {
     this.init();
@@ -207,73 +194,70 @@ class DatabaseService {
     }
   }
 
-  // Getters
-  getRooms() {
-    return JSON.parse(localStorage.getItem("ash_rooms"));
+  getRooms(): Room[] {
+    return JSON.parse(localStorage.getItem("ash_rooms") || "[]");
   }
   
-  getCafeItems() {
-    return JSON.parse(localStorage.getItem("ash_cafe"));
+  getCafeItems(): CafeItem[] {
+    return JSON.parse(localStorage.getItem("ash_cafe") || "[]");
   }
 
-  getReviews() {
-    return JSON.parse(localStorage.getItem("ash_reviews"));
+  getReviews(): Review[] {
+    return JSON.parse(localStorage.getItem("ash_reviews") || "[]");
   }
 
-  getCoupons() {
-    return JSON.parse(localStorage.getItem("ash_coupons"));
+  getCoupons(): Coupon[] {
+    return JSON.parse(localStorage.getItem("ash_coupons") || "[]");
   }
 
-  getOffers() {
-    return JSON.parse(localStorage.getItem("ash_offers"));
+  getOffers(): Offer[] {
+    return JSON.parse(localStorage.getItem("ash_offers") || "[]");
   }
 
-  getBlogs() {
-    return JSON.parse(localStorage.getItem("ash_blogs"));
+  getBlogs(): BlogPost[] {
+    return JSON.parse(localStorage.getItem("ash_blogs") || "[]");
   }
 
-  getBookings() {
-    return JSON.parse(localStorage.getItem("ash_bookings"));
+  getBookings(): Booking[] {
+    return JSON.parse(localStorage.getItem("ash_bookings") || "[]");
   }
 
-  // Setters / Modifiers
-  saveRooms(rooms) {
+  saveRooms(rooms: Room[]) {
     localStorage.setItem("ash_rooms", JSON.stringify(rooms));
   }
 
-  saveCafeItems(items) {
+  saveCafeItems(items: CafeItem[]) {
     localStorage.setItem("ash_cafe", JSON.stringify(items));
   }
 
-  saveBookings(bookings) {
+  saveBookings(bookings: Booking[]) {
     localStorage.setItem("ash_bookings", JSON.stringify(bookings));
   }
 
-  saveReviews(reviews) {
+  saveReviews(reviews: Review[]) {
     localStorage.setItem("ash_reviews", JSON.stringify(reviews));
   }
 
-  saveCoupons(coupons) {
+  saveCoupons(coupons: Coupon[]) {
     localStorage.setItem("ash_coupons", JSON.stringify(coupons));
   }
 
-  saveOffers(offers) {
+  saveOffers(offers: Offer[]) {
     localStorage.setItem("ash_offers", JSON.stringify(offers));
   }
 
-  saveBlogs(blogs) {
+  saveBlogs(blogs: BlogPost[]) {
     localStorage.setItem("ash_blogs", JSON.stringify(blogs));
   }
 
-  // Operations
-  addBooking(booking) {
+  addBooking(booking: Booking): Booking {
     const bookings = this.getBookings();
     bookings.unshift(booking);
     this.saveBookings(bookings);
     return booking;
   }
 
-  updateBookingStatus(id, status) {
+  updateBookingStatus(id: string, status: Booking["status"]) {
     const bookings = this.getBookings();
     const index = bookings.findIndex(b => b.id === id);
     if (index !== -1) {
@@ -282,7 +266,7 @@ class DatabaseService {
     }
   }
 
-  updateRoomPrice(id, newPrice) {
+  updateRoomPrice(id: string, newPrice: number) {
     const rooms = this.getRooms();
     const index = rooms.findIndex(r => r.id === id);
     if (index !== -1) {
@@ -291,23 +275,26 @@ class DatabaseService {
     }
   }
 
-  addReview(review) {
+  addReview(review: Partial<Review> & { guestName: string; rating: number; text: string }) {
     const reviews = this.getReviews();
-    reviews.unshift({
+    const newRev: Review = {
       id: "r_" + Date.now(),
       date: new Date().toISOString().split("T")[0],
       source: "Guest Website Review",
       avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80",
-      ...review
-    });
+      guestName: review.guestName,
+      rating: review.rating,
+      text: review.text,
+      roomId: review.roomId
+    };
+    reviews.unshift(newRev);
     this.saveReviews(reviews);
     
-    // Update average rating for that cottage if applicable
     if (review.roomId) {
       const rooms = this.getRooms();
       const rIdx = rooms.findIndex(r => r.id === review.roomId);
       if (rIdx !== -1) {
-        const roomReviews = reviews.filter(rev => rev.roomId === review.roomId || rev.id === "r_" + Date.now());
+        const roomReviews = reviews.filter(rev => rev.roomId === review.roomId);
         const totalRating = roomReviews.reduce((sum, rev) => sum + rev.rating, 0);
         rooms[rIdx].rating = Number((totalRating / roomReviews.length).toFixed(1));
         rooms[rIdx].reviewsCount += 1;
@@ -317,5 +304,4 @@ class DatabaseService {
   }
 }
 
-// Bind to window for global access
-window.dbService = new DatabaseService();
+export const dbService = new DatabaseService();
