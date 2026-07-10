@@ -1,49 +1,36 @@
-# Deployment Guide: Asherwoods on Vercel
+# Deployment Guide: Asherwoods on Vercel (TypeScript Version)
 
-We have initialized a local Git repository and committed all the luxury resort assets. Follow these simple steps to push the code to your GitHub account and deploy it on Vercel.
+We have successfully migrated the Asherwoods Cafe & Cottages project to a **compiled Vite + React + TypeScript** structure. This fixes the build issues on Vercel.
 
 ---
 
 ## Step 1: Push Code to GitHub
 
-1. Open **Command Prompt** or **PowerShell** on your computer.
+Since your local repository is already linked and has the new changes committed, you only need to run this command in your own terminal (PowerShell or Command Prompt) to upload the code:
+
+1. Open your terminal.
 2. Go to the project folder:
    ```cmd
    cd "c:\Users\ASUS TUF\Documents\New folder (2)"
    ```
-3. Create a new **Public** or **Private** repository on [GitHub](https://github.com/new). Name it something like `asherwoods-cafe-cottages`.
-4. Link this local folder to your new GitHub repository (replace `<YOUR_GITHUB_URL>` with your actual repo link):
+3. Push the new commit:
    ```bash
-   git remote add origin <YOUR_GITHUB_URL>
-   git branch -M main
-   git push -u origin main
+   git push origin main
    ```
-   *(If prompted, sign in to your GitHub account in the terminal window).*
+   *(If prompted, authorize GitHub in your browser).*
 
 ---
 
 ## Step 2: Deploy to Vercel
 
-1. Log in to your dashboard on [Vercel](https://vercel.com).
+If you haven't imported the project into Vercel yet, follow these steps:
+1. Log in to [vercel.com](https://vercel.com).
 2. Click **"Add New"** -> **"Project"** in the top right corner.
-3. Under "Import Git Repository", select your GitHub account and find `asherwoods-cafe-cottages`. Click **"Import"**.
-4. Vercel will auto-detect that it is a static web application. Leave all settings as default:
-   * **Framework Preset**: *Other* (or *Vite* if you compile it later, but Vercel serves standard static files instantly).
-   * **Build and Output Settings**: Default (Vercel will directly serve the root files since it's a static site).
+3. Find your `asherwoods` repository under "Import Git Repository" and click **"Import"**.
+4. Vercel will **auto-detect** that it is a **Vite** project. Keep all settings at their default:
+   * **Framework Preset**: *Vite* (auto-detected)
+   * **Build Command**: `npm run build` (runs `tsc && vite build` which compiles the TS/TSX files)
+   * **Output Directory**: `dist` (Vite's build output folder)
 5. Click **"Deploy"**.
-6. Within 10 seconds, Vercel will deploy your site and provide a free secure public link (e.g. `asherwoods-cafe-cottages.vercel.app`)!
 
----
-
-## Direct Vercel CLI Option (Alternative)
-
-If you have Node.js and NPM installed in the future and want to deploy directly from your command line without GitHub:
-1. Install Vercel CLI globally:
-   ```bash
-   npm install -g vercel
-   ```
-2. Log in and deploy:
-   ```bash
-   vercel login
-   vercel --prod
-   ```
+If you had already imported the project previously, Vercel will **automatically trigger a new deployment** as soon as you run `git push origin main`. The build will now compile successfully and produce your live website URL!
