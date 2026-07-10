@@ -8,7 +8,7 @@ import {
 import { AdminDashboard } from './admin';
 import { Room, Booking, SearchParams, GuestSession } from './types';
 import { dbService } from './db';
-import { Sun, Cloud, CloudRain, Snowflake, CloudFog } from 'lucide-react';
+import { Sun, Cloud, CloudRain, Snowflake, CloudFog, MessageCircle, PhoneCall } from 'lucide-react';
 
 interface WeatherInfo {
   temp: number;
