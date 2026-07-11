@@ -183,17 +183,17 @@ interface HeroProps {
 export const Hero: React.FC<HeroProps> = ({ onSearch, onViewChange }) => {
   const slides = [
     {
-      img: "https://images.unsplash.com/photo-1542401886-65d6c61db217?auto=format&fit=crop&w=1200&q=80",
+      img: "/hero1.jpg",
       title: "Escape to Nature",
       sub: "Stay. Relax. Explore."
     },
     {
-      img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80",
+      img: "/hero2.jpg",
       title: "Majestic Mountain Lodging",
       sub: "Cozy wood design at Parvati river boundaries"
     },
     {
-      img: "https://images.unsplash.com/photo-1587061949409-02df41d5e562?auto=format&fit=crop&w=1200&q=80",
+      img: "/hero3.jpg",
       title: "Unwind by the Embers",
       sub: "Israel delicacies & Himachali bonfire nights"
     }

@@ -10,9 +10,9 @@ const INITIAL_ROOMS: Room[] = [
     occupancy: "2 Guests",
     size: "280 sq ft",
     bed: "Queen Size",
-    image: "https://images.unsplash.com/photo-1542401886-65d6c61db217?auto=format&fit=crop&w=800&q=80",
+    image: "/mountain-view.jpg",
     images: [
-      "https://images.unsplash.com/photo-1542401886-65d6c61db217?auto=format&fit=crop&w=800&q=80",
+      "/mountain-view.jpg",
       "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80"
     ],
@@ -30,9 +30,9 @@ const INITIAL_ROOMS: Room[] = [
     occupancy: "3 Guests",
     size: "350 sq ft",
     bed: "King Size + Sofa Bed",
-    image: "https://images.unsplash.com/photo-1587061949409-02df41d5e562?auto=format&fit=crop&w=800&q=80",
+    image: "/luxury-wooden.jpg",
     images: [
-      "https://images.unsplash.com/photo-1587061949409-02df41d5e562?auto=format&fit=crop&w=800&q=80",
+      "/luxury-wooden.jpg",
       "https://images.unsplash.com/photo-1611891487122-2075b9624448?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1507038772120-7bef2c145e52?auto=format&fit=crop&w=800&q=80"
     ],
@@ -50,9 +50,9 @@ const INITIAL_ROOMS: Room[] = [
     occupancy: "2 Guests",
     size: "310 sq ft",
     bed: "King Size",
-    image: "https://images.unsplash.com/photo-1475855581690-80accde3ae2b?auto=format&fit=crop&w=800&q=80",
+    image: "/deluxe-riverside.jpg",
     images: [
-      "https://images.unsplash.com/photo-1475855581690-80accde3ae2b?auto=format&fit=crop&w=800&q=80",
+      "/deluxe-riverside.jpg",
       "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80"
     ],
@@ -70,9 +70,9 @@ const INITIAL_ROOMS: Room[] = [
     occupancy: "5 Guests",
     size: "520 sq ft",
     bed: "2 Double Beds + 1 Single Bed",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+    image: "/family-cottage.jpg",
     images: [
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+      "/family-cottage.jpg",
       "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80"
     ],
