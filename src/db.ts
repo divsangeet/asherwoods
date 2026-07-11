@@ -171,7 +171,26 @@ class DatabaseService {
   }
 
   init() {
-    if (!localStorage.getItem("ash_rooms")) {
+    const cachedRooms = localStorage.getItem("ash_rooms");
+    if (cachedRooms) {
+      try {
+        const parsed = JSON.parse(cachedRooms);
+        const updated = parsed.map((cachedRoom: any) => {
+          const fresh = INITIAL_ROOMS.find(r => r.id === cachedRoom.id);
+          if (fresh) {
+            return {
+              ...cachedRoom,
+              image: fresh.image,
+              images: fresh.images
+            };
+          }
+          return cachedRoom;
+        });
+        localStorage.setItem("ash_rooms", JSON.stringify(updated));
+      } catch (e) {
+        localStorage.setItem("ash_rooms", JSON.stringify(INITIAL_ROOMS));
+      }
+    } else {
       localStorage.setItem("ash_rooms", JSON.stringify(INITIAL_ROOMS));
     }
     if (!localStorage.getItem("ash_cafe")) {
