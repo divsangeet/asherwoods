@@ -1,36 +1,29 @@
-# Deployment Guide: Asherwoods on Vercel (TypeScript Version)
+# Deployment Guide: Asherwoods on Vercel
 
-We have successfully migrated the Asherwoods Cafe & Cottages project to a **compiled Vite + React + TypeScript** structure. This fixes the build issues on Vercel.
+We have successfully rebuilt the Asherwoods Cafe & Cottages project using a clean **Vite + React + TypeScript** structure. This guarantees a clean, compile-safe deployment.
 
 ---
 
-## Step 1: Push Code to GitHub
-
-Since your local repository is already linked and has the new changes committed, you only need to run this command in your own terminal (PowerShell or Command Prompt) to upload the code:
+## Method A: Deploy via GitHub (Recommended)
 
 1. Open your terminal.
 2. Go to the project folder:
    ```cmd
    cd "c:\Users\ASUS TUF\Documents\New folder (2)"
    ```
-3. Push the new commit:
+3. Stage and push all the clean files:
    ```bash
+   git add .
+   git commit -m "Rebuild website from scratch with clean React + Vite + TS structure"
    git push origin main
    ```
-   *(If prompted, authorize GitHub in your browser).*
+4. Log in to [vercel.com](https://vercel.com) and import the repository. Vercel will auto-detect the **Vite** preset and deploy the site!
 
 ---
 
-## Step 2: Deploy to Vercel
+## Method B: Direct Drag-and-Drop (No Git)
 
-If you haven't imported the project into Vercel yet, follow these steps:
-1. Log in to [vercel.com](https://vercel.com).
-2. Click **"Add New"** -> **"Project"** in the top right corner.
-3. Find your `asherwoods` repository under "Import Git Repository" and click **"Import"**.
-4. Vercel will **auto-detect** that it is a **Vite** project. Keep all settings at their default:
-   * **Framework Preset**: *Vite* (auto-detected)
-   * **Build Command**: `npm run build` (runs `tsc && vite build` which compiles the TS/TSX files)
-   * **Output Directory**: `dist` (Vite's build output folder)
-5. Click **"Deploy"**.
-
-If you had already imported the project previously, Vercel will **automatically trigger a new deployment** as soon as you run `git push origin main`. The build will now compile successfully and produce your live website URL!
+1. Open your File Explorer to `c:\Users\ASUS TUF\Documents\New folder (2)`.
+2. Find the newly built file **`asherwoods.zip`**.
+3. Open your browser and go to **[vercel.com/drop](https://vercel.com/drop)**.
+4. Drag and drop **`asherwoods.zip`** onto the page. Vercel will upload and compile it in the cloud!

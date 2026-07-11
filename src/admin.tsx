@@ -77,14 +77,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewChange }) 
     };
   }, [bookings, rooms, coupons]);
 
-  // SVG Bar Chart Data
-  const weeklyRevenueData = React.useMemo(() => {
-    const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-    const values = [12000, 18500, 9200, 24000, 31000, 48000, 39000];
-    const maxVal = Math.max(...values);
-    return { days, values, maxVal };
-  }, []);
-
   const handleStatusUpdate = (id: string, status: Booking["status"]) => {
     dbService.updateBookingStatus(id, status);
     loadAllData();
@@ -210,7 +202,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewChange }) 
 
         {/* Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-          <div className="bg-slate-950 p-6 border border-slate-800 rounded">
+          <div className="bg-slate-955 p-6 border border-slate-800 rounded">
             <div className="flex justify-between items-center text-slate-400">
               <span className="text-xs uppercase font-bold tracking-wider">Gross Revenue</span>
               <DollarSign size={20} className="text-green-500" />
@@ -219,7 +211,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewChange }) 
             <p className="text-[10px] text-green-500 font-semibold mt-1">↑ 14% vs last week</p>
           </div>
 
-          <div className="bg-slate-950 p-6 border border-slate-800 rounded">
+          <div className="bg-slate-955 p-6 border border-slate-800 rounded">
             <div className="flex justify-between items-center text-slate-400">
               <span className="text-xs uppercase font-bold tracking-wider">Occupancy Index</span>
               <Building size={20} className="text-blue-500" />
@@ -228,7 +220,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewChange }) 
             <p className="text-[10px] text-blue-500 font-semibold mt-1">Stays: {bookings.filter(b => b.status === 'Confirmed' || b.status === 'Checked In').length} cabins</p>
           </div>
 
-          <div className="bg-slate-950 p-6 border border-slate-800 rounded">
+          <div className="bg-slate-955 p-6 border border-slate-800 rounded">
             <div className="flex justify-between items-center text-slate-400">
               <span className="text-xs uppercase font-bold tracking-wider">Total Bookings</span>
               <Calendar size={20} className="text-yellow-500" />
@@ -237,7 +229,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewChange }) 
             <p className="text-[10px] text-yellow-500 font-semibold mt-1">Logs including historicals</p>
           </div>
 
-          <div className="bg-slate-950 p-6 border border-slate-800 rounded">
+          <div className="bg-slate-955 p-6 border border-slate-800 rounded">
             <div className="flex justify-between items-center text-slate-400">
               <span className="text-xs uppercase font-bold tracking-wider">Active Promos</span>
               <Award size={20} className="text-purple-500" />
@@ -250,7 +242,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewChange }) 
         {/* Workspace grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Navigation */}
-          <div className="lg:col-span-3 bg-slate-950 border border-slate-800 rounded p-4 flex flex-col space-y-1 h-fit">
+          <div className="lg:col-span-3 bg-slate-955 border border-slate-800 rounded p-4 flex flex-col space-y-1 h-fit">
             <button 
               onClick={() => setActiveTab("bookings")}
               className={`p-3 text-xs font-bold uppercase tracking-wider text-left rounded transition ${
@@ -286,7 +278,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewChange }) 
           </div>
 
           {/* Tab Contents */}
-          <div className="lg:col-span-9 bg-slate-950 border border-slate-800 rounded p-6 lg:p-8">
+          <div className="lg:col-span-9 bg-slate-955 border border-slate-800 rounded p-6 lg:p-8">
             
             {/* BOOKINGS TAB */}
             {activeTab === "bookings" && (
@@ -319,11 +311,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewChange }) 
                           <td className="py-4 px-2 font-semibold">{b.roomName}</td>
                           <td className="py-4 px-2">
                             <p className="font-bold">{b.guestName}</p>
-                            <p className="text-[10px] text-slate-500">{b.guestPhone}</p>
+                            <p className="text-[10px] text-slate-505">{b.guestPhone}</p>
                           </td>
                           <td className="py-4 px-2">
                             <p className="font-medium">{b.checkIn}</p>
-                            <p className="text-[10px] text-slate-500">to {b.checkOut}</p>
+                            <p className="text-[10px] text-slate-505">to {b.checkOut}</p>
                           </td>
                           <td className="py-4 px-2 text-right font-bold text-luxury-gold">₹{b.totalPrice.toFixed(0)}</td>
                           <td className="py-4 px-2">
@@ -395,14 +387,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewChange }) 
                     <div key={room.id} className="bg-slate-900 p-5 border border-slate-800 rounded flex justify-between items-center">
                       <div>
                         <h4 className="font-bold text-sm">{room.name}</h4>
-                        <p className="text-xs text-slate-500 mt-1">Base Cost: ₹{room.basePrice}/night</p>
+                        <p className="text-xs text-slate-550 mt-1">Base Cost: ₹{room.basePrice}/night</p>
                         {editingRoomId === room.id ? (
                           <div className="flex items-center space-x-2 mt-3">
                             <input 
                               type="number"
                               value={newRoomPrice}
                               onChange={(e) => setNewRoomPrice(Number(e.target.value))}
-                              className="bg-slate-950 border border-slate-800 text-white text-xs p-2 w-24 rounded focus:outline-none focus:border-luxury-gold"
+                              className="bg-slate-955 border border-slate-800 text-white text-xs p-2 w-24 rounded focus:outline-none focus:border-luxury-gold"
                             />
                             <button 
                               onClick={() => savePriceEdit(room.id)}
@@ -441,7 +433,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewChange }) 
               <div className="space-y-8 animate-fade-in">
                 <div className="border-b border-slate-800 pb-4">
                   <h2 className="font-serif text-xl font-bold">Promo Codes Generator</h2>
-                  <p className="text-xs text-slate-500 mt-1">Configure active coupons for the booking engine.</p>
+                  <p className="text-xs text-slate-505 mt-1">Configure active coupons for the booking engine.</p>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -449,58 +441,58 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewChange }) 
                   <form onSubmit={handleAddCoupon} className="bg-slate-900 p-5 border border-slate-800 rounded space-y-4">
                     <h3 className="font-bold text-sm">Create New Coupon</h3>
                     <div>
-                      <label className="text-[10px] uppercase text-slate-500 block mb-1">Coupon Code</label>
+                      <label className="text-[10px] uppercase text-slate-505 block mb-1">Coupon Code</label>
                       <input 
                         type="text" 
                         required
                         placeholder="e.g. SUMMER15"
                         value={newCouponCode}
                         onChange={(e) => setNewCouponCode(e.target.value)}
-                        className="bg-slate-950 border border-slate-800 text-white text-xs p-2.5 focus:outline-none focus:border-luxury-gold w-full rounded"
+                        className="bg-slate-955 border border-slate-800 text-white text-xs p-2.5 focus:outline-none focus:border-luxury-gold w-full rounded"
                       />
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <label className="text-[10px] uppercase text-slate-500 block mb-1">Type</label>
+                        <label className="text-[10px] uppercase text-slate-505 block mb-1">Type</label>
                         <select
                           value={newCouponType}
                           onChange={(e) => setNewCouponType(e.target.value as "percentage" | "flat")}
-                          className="bg-slate-950 border border-slate-800 text-white text-xs p-2.5 focus:outline-none focus:border-luxury-gold w-full rounded"
+                          className="bg-slate-955 border border-slate-800 text-white text-xs p-2.5 focus:outline-none focus:border-luxury-gold w-full rounded"
                         >
                           <option value="percentage">Percentage (%)</option>
                           <option value="flat">Flat Value (₹)</option>
                         </select>
                       </div>
                       <div>
-                        <label className="text-[10px] uppercase text-slate-500 block mb-1">Value</label>
+                        <label className="text-[10px] uppercase text-slate-505 block mb-1">Value</label>
                         <input 
                           type="number" 
                           required
                           value={newCouponVal}
                           onChange={(e) => setNewCouponVal(Number(e.target.value))}
-                          className="bg-slate-950 border border-slate-800 text-white text-xs p-2.5 focus:outline-none focus:border-luxury-gold w-full rounded"
+                          className="bg-slate-955 border border-slate-800 text-white text-xs p-2.5 focus:outline-none focus:border-luxury-gold w-full rounded"
                         />
                       </div>
                     </div>
                     <div>
-                      <label className="text-[10px] uppercase text-slate-500 block mb-1">Minimum Nights</label>
+                      <label className="text-[10px] uppercase text-slate-505 block mb-1">Minimum Nights</label>
                       <input 
                         type="number" 
                         required
                         value={newCouponMin}
                         onChange={(e) => setNewCouponMin(Number(e.target.value))}
-                        className="bg-slate-950 border border-slate-800 text-white text-xs p-2.5 focus:outline-none focus:border-luxury-gold w-full rounded"
+                        className="bg-slate-955 border border-slate-800 text-white text-xs p-2.5 focus:outline-none focus:border-luxury-gold w-full rounded"
                       />
                     </div>
                     <div>
-                      <label className="text-[10px] uppercase text-slate-500 block mb-1">Display Description</label>
+                      <label className="text-[10px] uppercase text-slate-505 block mb-1">Display Description</label>
                       <input 
                         type="text" 
                         required
                         placeholder="e.g. Save 15% on summer bookings"
                         value={newCouponDesc}
                         onChange={(e) => setNewCouponDesc(e.target.value)}
-                        className="bg-slate-950 border border-slate-800 text-white text-xs p-2.5 focus:outline-none focus:border-luxury-gold w-full rounded"
+                        className="bg-slate-955 border border-slate-800 text-white text-xs p-2.5 focus:outline-none focus:border-luxury-gold w-full rounded"
                       />
                     </div>
                     <button 
@@ -517,9 +509,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewChange }) 
                     {coupons.map((c) => (
                       <div key={c.code} className="bg-slate-900 p-4 border border-slate-800 rounded flex justify-between items-center">
                         <div>
-                          <span className="font-mono font-bold text-luxury-gold text-sm bg-slate-950 px-2 py-1 rounded border border-luxury-gold/20">{c.code}</span>
+                          <span className="font-mono font-bold text-luxury-gold text-sm bg-slate-955 px-2 py-1 rounded border border-luxury-gold/20">{c.code}</span>
                           <p className="text-xs text-slate-400 mt-2">{c.desc}</p>
-                          <p className="text-[10px] text-slate-500 mt-1">Condition: Min {c.minNights} nights stay</p>
+                          <p className="text-[10px] text-slate-505 mt-1">Condition: Min {c.minNights} nights stay</p>
                         </div>
                         <div className="text-right">
                           <p className="font-bold text-sm">{c.discountType === 'percentage' ? `${c.value}% Off` : `₹${c.value} Off`}</p>
@@ -536,7 +528,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewChange }) 
               <div className="space-y-8 animate-fade-in">
                 <div className="border-b border-slate-800 pb-4">
                   <h2 className="font-serif text-xl font-bold">Himalayan Blog Publisher</h2>
-                  <p className="text-xs text-slate-500 mt-1">Publish nature guides, local trekking trails or cafe news.</p>
+                  <p className="text-xs text-slate-505 mt-1">Publish nature guides, local trekking trails or cafe news.</p>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -544,36 +536,36 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewChange }) 
                   <form onSubmit={handlePublishBlog} className="bg-slate-900 p-5 border border-slate-800 rounded space-y-4">
                     <h3 className="font-bold text-sm">Write New Post</h3>
                     <div>
-                      <label className="text-[10px] uppercase text-slate-500 block mb-1">Blog Title</label>
+                      <label className="text-[10px] uppercase text-slate-505 block mb-1">Blog Title</label>
                       <input 
                         type="text" 
                         required
                         placeholder="e.g. Sunrise Hikes in Tosh"
                         value={newBlogTitle}
                         onChange={(e) => setNewBlogTitle(e.target.value)}
-                        className="bg-slate-950 border border-slate-800 text-white text-xs p-2.5 focus:outline-none focus:border-luxury-gold w-full rounded"
+                        className="bg-slate-955 border border-slate-800 text-white text-xs p-2.5 focus:outline-none focus:border-luxury-gold w-full rounded"
                       />
                     </div>
                     <div>
-                      <label className="text-[10px] uppercase text-slate-500 block mb-1">Excerpt Summary</label>
+                      <label className="text-[10px] uppercase text-slate-505 block mb-1">Excerpt Summary</label>
                       <input 
                         type="text" 
                         required
                         placeholder="Short 1-sentence synopsis"
                         value={newBlogExcerpt}
                         onChange={(e) => setNewBlogExcerpt(e.target.value)}
-                        className="bg-slate-950 border border-slate-800 text-white text-xs p-2.5 focus:outline-none focus:border-luxury-gold w-full rounded"
+                        className="bg-slate-955 border border-slate-800 text-white text-xs p-2.5 focus:outline-none focus:border-luxury-gold w-full rounded"
                       />
                     </div>
                     <div>
-                      <label className="text-[10px] uppercase text-slate-500 block mb-1">Full Article Content</label>
+                      <label className="text-[10px] uppercase text-slate-505 block mb-1">Full Article Content</label>
                       <textarea 
                         required
                         rows={6}
                         placeholder="Write article details here..."
                         value={newBlogContent}
                         onChange={(e) => setNewBlogContent(e.target.value)}
-                        className="bg-slate-950 border border-slate-800 text-white text-xs p-2.5 focus:outline-none focus:border-luxury-gold w-full rounded"
+                        className="bg-slate-955 border border-slate-800 text-white text-xs p-2.5 focus:outline-none focus:border-luxury-gold w-full rounded"
                       />
                     </div>
                     <button 
@@ -592,7 +584,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewChange }) 
                         <img src={post.image} className="h-16 w-16 object-cover rounded" alt={post.title} />
                         <div>
                           <h4 className="font-bold text-xs">{post.title}</h4>
-                          <p className="text-[10px] text-slate-500 mt-1">By {post.author} on {post.date}</p>
+                          <p className="text-[10px] text-slate-505 mt-1">By {post.author} on {post.date}</p>
                           <p className="text-[10px] text-slate-400 mt-2 line-clamp-2">{post.excerpt}</p>
                         </div>
                       </div>

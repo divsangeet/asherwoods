@@ -1,4 +1,4 @@
-// Asherwoods Cafe & Cottages - Typed Database Service (Supabase Fallback)
+// Asherwoods Cafe & Cottages - Database Service
 import { Room, CafeItem, Review, Coupon, Offer, BlogPost, Booking } from './types';
 
 const INITIAL_ROOMS: Room[] = [
@@ -95,8 +95,8 @@ const INITIAL_CAFE_ITEMS: CafeItem[] = [
   { id: "b2", category: "Breakfast", name: "Avocado & Goat Cheese Toast", price: 280, desc: "Mashed avocado, crumbled local goat cheese, cherry tomatoes on sourdough bread.", type: "Veg", image: "https://images.unsplash.com/photo-1541518763669-27fef04b14ea?auto=format&fit=crop&w=400&q=80" },
   { id: "p1", category: "Pizza", name: "Wild Mushroom & Truffle Pizza", price: 420, desc: "Hand-tossed thin crust, wild Himalayan mushrooms, white truffle oil, fresh mozzarella.", type: "Veg", image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=400&q=80" },
   { id: "p2", category: "Pasta", name: "Pesto Genovese Penne", price: 340, desc: "Penne tossed in creamy fresh basil and pine nut pesto with extra virgin olive oil.", type: "Veg", image: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=400&q=80" },
-  { id: "bu1", category: "Burgers", name: "Crispy Paneer Chimichurri Burger", price: 260, desc: "Crispy paneer patty, chimichurri mayo, lettuce, tomato in brioche bun.", type: "Veg", image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&q=80" },
-  { id: "d1", category: "Desserts", name: "Hot Apple Pie with Ice Cream", price: 220, desc: "Traditional pie stuffed with local Himachali apples, served with vanilla bean ice cream.", type: "Veg", image: "https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=400&q=80" },
+  { id: "bu1", category: "Burgers", name: "Paneer Chimichurri Burger", price: 260, desc: "Crispy paneer patty, chimichurri mayo, lettuce, tomato in brioche bun.", type: "Veg", image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&q=80" },
+  { id: "d1", category: "Desserts", name: "Apple Pie with Ice Cream", price: 220, desc: "Traditional pie stuffed with local Himachali apples, served with vanilla bean ice cream.", type: "Veg", image: "https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=400&q=80" },
   { id: "h1", category: "Himachali Specials", name: "Siddu with Ghee & Honey", price: 180, desc: "Traditional steamed wheat bun stuffed with poppy seed paste, served hot with liquid ghee.", type: "Veg", image: "https://images.unsplash.com/photo-1626132647523-66f5bf380027?auto=format&fit=crop&w=400&q=80" }
 ];
 

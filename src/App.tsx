@@ -8,7 +8,7 @@ import {
 import { AdminDashboard } from './admin';
 import { Room, Booking, SearchParams, GuestSession } from './types';
 import { dbService } from './db';
-import { Sun, Cloud, CloudRain, Snowflake, CloudFog, MessageCircle, PhoneCall } from 'lucide-react';
+import { Sun, Cloud, CloudRain, Snowflake, CloudFog, MessageCircle, PhoneCall, X, CheckCircle } from 'lucide-react';
 
 interface WeatherInfo {
   temp: number;
@@ -163,7 +163,7 @@ export default function App() {
       <div className="bg-forest-950 text-luxury-beige text-[10px] py-1.5 px-4 flex justify-between items-center z-50 border-b border-forest-900/30">
         <div className="flex items-center space-x-2">
           {renderWeatherIcon()}
-          <span className="font-sans uppercase tracking-widest font-semibold">Kasol Live: {weather.temp}°C, {weather.condition}</span>
+          <span className="font-sans uppercase tracking-widest font-semibold font-bold">Kasol Live: {weather.temp}°C, {weather.condition}</span>
         </div>
         <div className="hidden sm:flex items-center space-x-4 tracking-wider uppercase font-semibold">
           <span>Parvati Valley, HP</span>
@@ -296,7 +296,7 @@ export default function App() {
                 const el = document.getElementById("rooms-section");
                 if (el) el.scrollIntoView({ behavior: "smooth" });
               }}
-              className="w-full bg-luxury-gold hover:bg-yellow-600 text-forest-950 font-bold uppercase tracking-widest text-xs py-3.5 rounded shadow-md transition duration-300"
+              className="w-full bg-luxury-gold hover:bg-yellow-600 text-forest-955 font-bold uppercase tracking-widest text-xs py-3.5 rounded shadow-md transition duration-300"
             >
               Claim Special Discount
             </button>
@@ -310,7 +310,7 @@ export default function App() {
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 max-w-md rounded shadow-2xl relative text-left">
             <button 
               onClick={() => setLastBooking(null)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-slate-650 transition"
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-505 transition"
             >
               <X size={18} />
             </button>
@@ -324,7 +324,7 @@ export default function App() {
               Congratulations! Your reservation at **Asherwoods Cafe & Cottages** is locked in. Here is your digital stay receipt:
             </p>
 
-            <div className="bg-slate-100 dark:bg-slate-950 p-4 rounded space-y-2.5 text-xs font-mono mb-6 text-slate-800 dark:text-slate-300 border border-slate-200/50 dark:border-slate-800">
+            <div className="bg-slate-100 dark:bg-slate-955 p-4 rounded space-y-2.5 text-xs font-mono mb-6 text-slate-800 dark:text-slate-300 border border-slate-200/50 dark:border-slate-800">
               <div className="flex justify-between font-bold border-b border-slate-200 dark:border-slate-800 pb-2">
                 <span>Stay Receipt</span>
                 <span>{lastBooking.id}</span>

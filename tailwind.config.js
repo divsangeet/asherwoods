@@ -45,12 +45,8 @@ export default {
         serif: ['"Playfair Display"', 'Georgia', 'serif'],
         sans: ['Inter', 'Outfit', 'sans-serif'],
       },
-      backgroundImage: {
-        'glass-grad': 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%)',
-        'glass-dark': 'linear-gradient(135deg, rgba(10, 47, 29, 0.45) 0%, rgba(6, 28, 17, 0.65) 100%)',
-      },
-      backdropBlur: {
-        xs: '2px',
+      animation: {
+        'spin-slow': 'spin 12s linear infinite',
       }
     },
   },

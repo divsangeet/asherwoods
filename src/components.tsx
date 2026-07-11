@@ -5,8 +5,7 @@ import {
   Star, Heart, X, CheckCircle, Check, ChefHat, Navigation, 
   ChevronRight, CalendarDays, Users, DoorOpen, Sparkles, 
   MessageSquare, Send, Instagram, Facebook, Twitter, 
-  MessageCircle, PhoneCall, Phone, Mail, MapPin, ExternalLink, 
-  History, Menu, Sun, Moon 
+  MessageCircle, PhoneCall, Menu, Sun, Moon, History
 } from 'lucide-react';
 import { Room, CafeItem, Review, Coupon, Booking, SearchParams, GuestSession } from './types';
 import { dbService } from './db';
@@ -29,7 +28,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   React.useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 55);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -413,7 +412,7 @@ export const WhyChooseUs: React.FC = () => {
               <h3 className="font-serif text-lg text-forest-900 dark:text-luxury-warmwhite font-bold mt-6 group-hover:text-luxury-gold transition-colors duration-300">
                 {p.title}
               </h3>
-              <p className="font-sans text-sm text-slate-600 dark:text-luxury-beige/70 mt-3 leading-relaxed">
+              <p className="font-sans text-sm text-slate-650 dark:text-luxury-beige/70 mt-3 leading-relaxed">
                 {p.desc}
               </p>
             </div>
@@ -512,9 +511,9 @@ export const Rooms: React.FC<RoomsProps> = ({ onBookRoom, wishlist = [], toggleW
 
                   <div className="flex justify-between items-center mt-auto">
                     <div>
-                      <p className="text-[10px] text-slate-500 dark:text-luxury-beige/60 uppercase tracking-widest">Starting Nightly</p>
+                      <p className="text-[10px] text-slate-550 dark:text-luxury-beige/60 uppercase tracking-widest">Starting Nightly</p>
                       <p className="font-serif text-2xl text-forest-900 dark:text-luxury-gold font-bold">
-                        ₹{room.price} <span className="text-xs text-slate-505 font-sans font-normal"> + taxes</span>
+                        ₹{room.price} <span className="text-xs text-slate-550 font-sans font-normal"> + taxes</span>
                       </p>
                     </div>
 
@@ -541,7 +540,7 @@ export const Rooms: React.FC<RoomsProps> = ({ onBookRoom, wishlist = [], toggleW
       </div>
 
       {selectedCottage && (
-        <div className="fixed inset-0 z-55 flex items-center justify-center p-4 bg-forest-950/70 backdrop-blur-sm">
+        <div className="fixed inset-0 z-55 flex items-center justify-center p-4 bg-forest-955/70 backdrop-blur-sm">
           <div className="bg-luxury-warmwhite dark:bg-forest-950 border border-forest-800/20 dark:border-white/10 rounded-sm w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl relative">
             <button 
               onClick={() => setSelectedCottage(null)}
@@ -551,7 +550,7 @@ export const Rooms: React.FC<RoomsProps> = ({ onBookRoom, wishlist = [], toggleW
             </button>
 
             <div className="grid grid-cols-1 md:grid-cols-2">
-              <div className="h-64 md:h-full bg-forest-950 relative">
+              <div className="h-64 md:h-full bg-forest-955 relative">
                 <img 
                   src={selectedCottage.image} 
                   alt={selectedCottage.name} 
@@ -621,7 +620,7 @@ export const CafeMenu: React.FC = () => {
   }, [menuItems, activeCategory]);
 
   return (
-    <section className="py-24 bg-forest-950 text-white transition-colors duration-300">
+    <section className="py-24 bg-forest-955 text-white transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto">
           <span className="font-serif text-sm tracking-widest text-luxury-gold uppercase font-bold">The Forest Gourmet Experience</span>
@@ -662,7 +661,7 @@ export const CafeMenu: React.FC = () => {
                   alt={item.name} 
                   className="w-full h-full object-cover transform scale-100 group-hover:scale-105 transition-transform duration-[2000ms]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-forest-950 via-transparent to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-forest-955 via-transparent to-transparent"></div>
                 <div className={`absolute top-4 right-4 flex items-center space-x-1 px-2.5 py-1 rounded-sm text-[10px] font-bold uppercase ${
                   item.type === "Veg" ? "bg-green-600/90 text-white" : "bg-red-600/90 text-white"
                 }`}>
@@ -711,7 +710,7 @@ export const Experiences: React.FC = () => {
   ];
 
   return (
-    <section className="py-24 bg-luxury-beige dark:bg-forest-950/60 transition-colors duration-300">
+    <section className="py-24 bg-luxury-beige dark:bg-forest-955/60 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto">
           <span className="font-serif text-sm tracking-widest text-luxury-gold uppercase font-bold">Resort Life & Adventures</span>
@@ -732,7 +731,7 @@ export const Experiences: React.FC = () => {
                 alt={ex.title} 
                 className="w-full h-full object-cover transform scale-100 group-hover:scale-105 transition-transform duration-[2000ms]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-forest-950/90 via-forest-950/30 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-forest-955/90 via-forest-955/30 to-transparent"></div>
               
               <div className="absolute bottom-8 left-8 right-8 text-white">
                 <h3 className="font-serif text-xl md:text-2xl font-bold text-luxury-gold">{ex.title}</h3>
@@ -808,7 +807,7 @@ export const Gallery: React.FC = () => {
                 alt={`Gallery ${img.cat}`} 
                 className="w-full h-auto object-cover transform scale-100 group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-forest-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <div className="absolute inset-0 bg-forest-955/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                 <span className="bg-luxury-gold text-forest-950 px-4 py-2 text-xs tracking-widest uppercase font-bold rounded-sm shadow-md">
                   {img.cat}
                 </span>
@@ -835,7 +834,7 @@ export const Attractions: React.FC = () => {
   const [activePoint, setActivePoint] = React.useState(points[0]);
 
   return (
-    <section className="py-24 bg-luxury-beige dark:bg-forest-950 transition-colors duration-300">
+    <section className="py-24 bg-luxury-beige dark:bg-forest-955 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto">
           <span className="font-serif text-sm tracking-widest text-luxury-gold uppercase font-bold">Himalayan Explorer Guide</span>
@@ -1015,7 +1014,7 @@ export const RazorpayModal: React.FC<RazorpayModalProps> = ({
           </div>
         ) : (
           <div className="flex">
-            <div className="w-1/3 bg-slate-950 border-r border-slate-800 flex flex-col">
+            <div className="w-1/3 bg-slate-955 border-r border-slate-800 flex flex-col">
               <button 
                 onClick={() => setMethod("upi")}
                 className={`p-4 text-left text-xs uppercase font-bold tracking-wider transition ${
@@ -1101,7 +1100,7 @@ export const RazorpayModal: React.FC<RazorpayModalProps> = ({
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <label className="text-[9px] uppercase text-slate-500 block mb-0.5">Expiry (MM/YY)</label>
+                      <label className="text-[9px] uppercase text-slate-505 block mb-0.5">Expiry (MM/YY)</label>
                       <input 
                         type="text" 
                         placeholder="12/29"
@@ -1111,7 +1110,7 @@ export const RazorpayModal: React.FC<RazorpayModalProps> = ({
                       />
                     </div>
                     <div>
-                      <label className="text-[9px] uppercase text-slate-500 block mb-0.5">CVV</label>
+                      <label className="text-[9px] uppercase text-slate-505 block mb-0.5">CVV</label>
                       <input 
                         type="password" 
                         placeholder="***"
@@ -1838,7 +1837,7 @@ export const ChatAssistant: React.FC = () => {
                 key={i}
                 className={`max-w-[75%] p-3 text-xs leading-relaxed rounded-sm ${
                   m.sender === "bot" 
-                    ? "bg-forest-900/10 dark:bg-white/5 text-slate-800 dark:text-luxury-warmwhite self-start" 
+                    ? "bg-forest-900/10 dark:bg-white/5 text-slate-850 dark:text-luxury-warmwhite self-start" 
                     : "bg-forest-900 text-white self-end"
                 }`}
               >
@@ -1895,7 +1894,7 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onViewChange }) => {
   return (
-    <footer className="bg-forest-950 text-white border-t border-forest-900/50 py-16 transition-colors duration-300">
+    <footer className="bg-forest-955 text-white border-t border-forest-900/50 py-16 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="space-y-4">
